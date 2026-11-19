@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+
+% "preprint" = non-anonymous with page numbers (course report). Use "review" for anonymous peer review.
+\usepackage[preprint]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{xspace}
+
+% Top-align float-only pages (appendix table) instead of centring them vertically.
+\makeatletter\setlength{\@fptop}{0pt}\makeatother
+
+\newcommand{\EQ}{\textsc{Eq}\xspace}
+\newcommand{\FE}{\textsc{Fwd}\xspace}
+\newcommand{\BE}{\textsc{Bwd}\xspace}
+\newcommand{\NO}{\textsc{NegOth}\xspace}
+\newcommand{\Rev}{\mathrm{Rev}}
+
+\title{Consistent by Construction: Joint Bidirectional Decoding\\for Directional Fine-Grained NLI (DiCo-NLI)}
+
+% TODO(team): fill in names, affiliation and e-mails.
+\author{Member 1 \and Member 2 \and Member 3 \and Member 4 \\
+  BLG505 Natural Language Processing, Term Project \\
+  \texttt{\{member1,member2,member3,member4\}@example.edu}}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+\input{sections/body}
+
+\bibliography{references}
+
+\appendix
+\input{sections/appendix}
+
+\end{document}

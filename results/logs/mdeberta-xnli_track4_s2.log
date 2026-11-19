@@ -1,0 +1,9 @@
+Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 and are newly initialized because the shapes did not match:
+- classifier.bias: found shape torch.Size([3]) in the checkpoint and torch.Size([4]) in the model instantiated
+- classifier.weight: found shape torch.Size([3, 768]) in the checkpoint and torch.Size([4, 768]) in the model instantiated
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 0.7523279244910007, "kl": 0.0, "val_mean_weighted_f1": 0.7596893218268519, "elapsed_s": 189.0}
+{"epoch": 2, "ce": 0.24469626623730378, "kl": 0.0, "val_mean_weighted_f1": 0.7499287892801441, "elapsed_s": 379.3}
+{"epoch": 3, "ce": 0.0869509772091292, "kl": 0.0, "val_mean_weighted_f1": 0.7703390790926872, "elapsed_s": 567.3}
+{"epoch": 4, "ce": 0.028827021257278738, "kl": 0.0, "val_mean_weighted_f1": 0.7663638130345232, "elapsed_s": 755.4}
+done: best epoch 3, val F1 0.7703, 772s

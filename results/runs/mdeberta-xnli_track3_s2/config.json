@@ -1,0 +1,17 @@
+{
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "train_tracks": [
+    "track3"
+  ],
+  "eval_tracks": null,
+  "run_name": "mdeberta-xnli_track3_s2",
+  "seed": 2,
+  "epochs": 10,
+  "lr": 5e-05,
+  "bs": 32,
+  "max_len": 64,
+  "warmup": 0.1,
+  "wd": 0.01,
+  "cons_lambda": 0.0,
+  "train_embeddings": false
+}

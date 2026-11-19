@@ -1,0 +1,15 @@
+Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 and are newly initialized because the shapes did not match:
+- classifier.bias: found shape torch.Size([3]) in the checkpoint and torch.Size([4]) in the model instantiated
+- classifier.weight: found shape torch.Size([3, 768]) in the checkpoint and torch.Size([4, 768]) in the model instantiated
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 1.0058535425500437, "kl": 0.0, "val_mean_weighted_f1": 0.7387240745602519, "elapsed_s": 33.1}
+{"epoch": 2, "ce": 0.5993469069627199, "kl": 0.0, "val_mean_weighted_f1": 0.7864565020781771, "elapsed_s": 66.2}
+{"epoch": 3, "ce": 0.42253106524204387, "kl": 0.0, "val_mean_weighted_f1": 0.7656821393656688, "elapsed_s": 99.3}
+{"epoch": 4, "ce": 0.27810897151457853, "kl": 0.0, "val_mean_weighted_f1": 0.7948585982882538, "elapsed_s": 131.8}
+{"epoch": 5, "ce": 0.1612055649574118, "kl": 0.0, "val_mean_weighted_f1": 0.8103187850169778, "elapsed_s": 165.3}
+{"epoch": 6, "ce": 0.13465993050699945, "kl": 0.0, "val_mean_weighted_f1": 0.8083975395551392, "elapsed_s": 199.2}
+{"epoch": 7, "ce": 0.08445903961546719, "kl": 0.0, "val_mean_weighted_f1": 0.8104748479002819, "elapsed_s": 232.0}
+{"epoch": 8, "ce": 0.056728740466165946, "kl": 0.0, "val_mean_weighted_f1": 0.8061886081663786, "elapsed_s": 266.4}
+{"epoch": 9, "ce": 0.04254634550836107, "kl": 0.0, "val_mean_weighted_f1": 0.8145643606806928, "elapsed_s": 299.2}
+{"epoch": 10, "ce": 0.034178343495692716, "kl": 0.0, "val_mean_weighted_f1": 0.8144705727484916, "elapsed_s": 333.7}
+done: best epoch 9, val F1 0.8146, 337s

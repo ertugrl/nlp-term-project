@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+results/runs/_*/
+results/logs/_*
+report/*.aux
+report/*.log
+report/*.bbl
+report/*.blg
+report/*.out
+report/build/*
+!report/build/main.pdf

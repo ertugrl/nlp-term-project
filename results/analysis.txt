@@ -1,0 +1,64 @@
+mdeberta-cons_track1
+  indep  correct=83.9 neg=8.8 inconsistent=1.2 consistent_wrong=6.1 neg_precision=59.3 neg_recall=57.9 neg_f1=58.4
+  joint  correct=85.3 neg=7.5 inconsistent=0.0 consistent_wrong=7.2 neg_precision=59.8 neg_recall=57.9 neg_f1=58.7
+  struct correct=91.0 neg=0.0 inconsistent=0.0 consistent_wrong=9.0 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-cons_track2
+  indep  correct=78.6 neg=10.6 inconsistent=2.5 consistent_wrong=8.3 neg_precision=53.2 neg_recall=53.1 neg_f1=53.1
+  joint  correct=81.2 neg=8.9 inconsistent=0.0 consistent_wrong=9.9 neg_precision=53.7 neg_recall=53.1 neg_f1=53.3
+  struct correct=86.9 neg=0.0 inconsistent=0.0 consistent_wrong=13.1 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-cons_track3
+  indep  correct=77.4 neg=12.9 inconsistent=1.7 consistent_wrong=8.1 neg_precision=46.0 neg_recall=52.5 neg_f1=49.0
+  joint  correct=79.3 neg=12.0 inconsistent=0.0 consistent_wrong=8.7 neg_precision=45.5 neg_recall=52.5 neg_f1=48.7
+  struct correct=86.3 neg=0.0 inconsistent=0.0 consistent_wrong=13.7 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-cons_track4
+  indep  correct=75.4 neg=13.0 inconsistent=1.3 consistent_wrong=10.3 neg_precision=44.2 neg_recall=47.2 neg_f1=45.6 en-es:weighted_f1=74.2 en-es:soft_cons=87.4 en-es:hard_cons=77.5 en-eu:weighted_f1=72.1 en-eu:soft_cons=84.5 en-eu:hard_cons=74.6 es-eu:weighted_f1=70.9 es-eu:soft_cons=85.2 es-eu:hard_cons=73.9
+  joint  correct=77.2 neg=11.4 inconsistent=0.0 consistent_wrong=11.4 neg_precision=44.3 neg_recall=47.2 neg_f1=45.6 en-es:weighted_f1=74.5 en-es:soft_cons=90.2 en-es:hard_cons=79.4 en-eu:weighted_f1=72.1 en-eu:soft_cons=87.5 en-eu:hard_cons=76.2 es-eu:weighted_f1=71.1 es-eu:soft_cons=88.0 es-eu:hard_cons=75.8
+  struct correct=84.4 neg=0.0 inconsistent=0.0 consistent_wrong=15.6 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0 en-es:weighted_f1=88.6 en-es:soft_cons=100.0 en-es:hard_cons=86.3 en-eu:weighted_f1=86.3 en-eu:soft_cons=100.0 en-eu:hard_cons=83.6 es-eu:weighted_f1=86.0 es-eu:soft_cons=100.0 es-eu:hard_cons=83.3
+mdeberta-xnli_track1
+  indep  correct=84.6 neg=7.8 inconsistent=3.2 consistent_wrong=4.3 neg_precision=65.2 neg_recall=60.7 neg_f1=62.9
+  joint  correct=87.5 neg=5.8 inconsistent=0.0 consistent_wrong=6.7 neg_precision=66.8 neg_recall=60.7 neg_f1=63.6
+  struct correct=90.3 neg=0.0 inconsistent=0.0 consistent_wrong=9.7 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-xnli_track2
+  indep  correct=79.5 neg=11.2 inconsistent=3.9 consistent_wrong=5.4 neg_precision=55.8 neg_recall=59.7 neg_f1=57.7
+  joint  correct=82.2 neg=9.6 inconsistent=0.0 consistent_wrong=8.2 neg_precision=54.3 neg_recall=59.7 neg_f1=56.9
+  struct correct=87.6 neg=0.0 inconsistent=0.0 consistent_wrong=12.4 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-xnli_track3
+  indep  correct=75.1 neg=16.0 inconsistent=2.2 consistent_wrong=6.7 neg_precision=44.8 neg_recall=57.5 neg_f1=50.3
+  joint  correct=78.5 neg=13.2 inconsistent=0.0 consistent_wrong=8.3 neg_precision=45.5 neg_recall=57.5 neg_f1=50.8
+  struct correct=86.2 neg=0.0 inconsistent=0.0 consistent_wrong=13.8 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta-xnli_track4
+  indep  correct=74.7 neg=14.9 inconsistent=2.7 consistent_wrong=7.6 neg_precision=47.5 neg_recall=54.6 neg_f1=50.8 en-es:weighted_f1=77.3 en-es:soft_cons=84.1 en-es:hard_cons=77.4 en-eu:weighted_f1=74.1 en-eu:soft_cons=82.1 en-eu:hard_cons=74.1 es-eu:weighted_f1=72.8 es-eu:soft_cons=80.9 es-eu:hard_cons=72.7
+  joint  correct=78.3 neg=11.6 inconsistent=0.0 consistent_wrong=10.1 neg_precision=47.5 neg_recall=54.6 neg_f1=50.7 en-es:weighted_f1=77.2 en-es:soft_cons=89.4 en-es:hard_cons=80.4 en-eu:weighted_f1=74.4 en-eu:soft_cons=88.4 en-eu:hard_cons=77.9 es-eu:weighted_f1=72.9 es-eu:soft_cons=87.4 es-eu:hard_cons=76.7
+  struct correct=85.5 neg=0.0 inconsistent=0.0 consistent_wrong=14.5 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0 en-es:weighted_f1=88.8 en-es:soft_cons=100.0 en-es:hard_cons=86.8 en-eu:weighted_f1=87.3 en-eu:soft_cons=100.0 en-eu:hard_cons=85.0 es-eu:weighted_f1=87.1 es-eu:soft_cons=100.0 es-eu:hard_cons=84.7
+mdeberta_track1
+  indep  correct=81.0 neg=10.2 inconsistent=2.6 consistent_wrong=6.1 neg_precision=56.8 neg_recall=59.1 neg_f1=57.9
+  joint  correct=84.5 neg=8.2 inconsistent=0.0 consistent_wrong=7.3 neg_precision=58.1 neg_recall=59.1 neg_f1=58.5
+  struct correct=89.5 neg=0.0 inconsistent=0.0 consistent_wrong=10.5 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta_track2
+  indep  correct=78.3 neg=11.8 inconsistent=2.6 consistent_wrong=7.2 neg_precision=51.8 neg_recall=59.1 neg_f1=55.1
+  joint  correct=81.1 neg=10.7 inconsistent=0.0 consistent_wrong=8.2 neg_precision=51.4 neg_recall=59.1 neg_f1=54.9
+  struct correct=88.2 neg=0.0 inconsistent=0.0 consistent_wrong=11.8 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta_track3
+  indep  correct=75.7 neg=14.7 inconsistent=2.6 consistent_wrong=7.0 neg_precision=49.2 neg_recall=62.6 neg_f1=54.9
+  joint  correct=78.8 neg=12.5 inconsistent=0.0 consistent_wrong=8.7 neg_precision=49.2 neg_recall=62.6 neg_f1=55.0
+  struct correct=86.5 neg=0.0 inconsistent=0.0 consistent_wrong=13.5 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+mdeberta_track4
+  indep  correct=73.8 neg=16.1 inconsistent=2.0 consistent_wrong=8.0 neg_precision=42.7 neg_recall=53.8 neg_f1=47.6 en-es:weighted_f1=75.1 en-es:soft_cons=82.9 en-es:hard_cons=75.6 en-eu:weighted_f1=73.6 en-eu:soft_cons=81.7 en-eu:hard_cons=73.7 es-eu:weighted_f1=71.6 es-eu:soft_cons=80.9 es-eu:hard_cons=72.0
+  joint  correct=76.6 neg=13.8 inconsistent=0.0 consistent_wrong=9.7 neg_precision=42.8 neg_recall=53.8 neg_f1=47.7 en-es:weighted_f1=74.9 en-es:soft_cons=87.3 en-es:hard_cons=78.1 en-eu:weighted_f1=74.0 en-eu:soft_cons=86.3 en-eu:hard_cons=76.9 es-eu:weighted_f1=71.6 es-eu:soft_cons=85.1 es-eu:hard_cons=74.7
+  struct correct=85.6 neg=0.0 inconsistent=0.0 consistent_wrong=14.4 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0 en-es:weighted_f1=89.1 en-es:soft_cons=100.0 en-es:hard_cons=87.0 en-eu:weighted_f1=87.6 en-eu:soft_cons=100.0 en-eu:hard_cons=85.2 es-eu:weighted_f1=87.1 es-eu:soft_cons=100.0 es-eu:hard_cons=84.6
+xlmr_track1
+  indep  correct=72.1 neg=9.6 inconsistent=7.7 consistent_wrong=10.6 neg_precision=50.6 neg_recall=37.1 neg_f1=42.7
+  joint  correct=77.3 neg=6.1 inconsistent=0.0 consistent_wrong=16.6 neg_precision=53.5 neg_recall=37.1 neg_f1=43.8
+  struct correct=79.9 neg=0.0 inconsistent=0.0 consistent_wrong=20.1 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+xlmr_track2
+  indep  correct=51.9 neg=7.6 inconsistent=26.4 consistent_wrong=14.2 neg_precision=45.8 neg_recall=21.1 neg_f1=25.1
+  joint  correct=68.4 neg=6.5 inconsistent=0.0 consistent_wrong=25.2 neg_precision=41.5 neg_recall=21.1 neg_f1=24.4
+  struct correct=71.5 neg=0.0 inconsistent=0.0 consistent_wrong=28.5 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+xlmr_track3
+  indep  correct=63.7 neg=7.1 inconsistent=12.4 consistent_wrong=16.8 neg_precision=46.1 neg_recall=23.3 neg_f1=29.2
+  joint  correct=70.0 neg=5.7 inconsistent=0.0 consistent_wrong=24.3 neg_precision=43.9 neg_recall=23.3 neg_f1=28.7
+  struct correct=73.0 neg=0.0 inconsistent=0.0 consistent_wrong=27.0 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0
+xlmr_track4
+  indep  correct=64.9 neg=15.1 inconsistent=5.6 consistent_wrong=14.4 neg_precision=36.3 neg_recall=34.5 neg_f1=35.3 en-es:weighted_f1=64.4 en-es:soft_cons=80.7 en-es:hard_cons=66.4 en-eu:weighted_f1=64.0 en-eu:soft_cons=78.7 en-eu:hard_cons=65.0 es-eu:weighted_f1=61.9 es-eu:soft_cons=78.6 es-eu:hard_cons=63.2
+  joint  correct=69.7 neg=11.6 inconsistent=0.0 consistent_wrong=18.7 neg_precision=36.3 neg_recall=34.5 neg_f1=35.3 en-es:weighted_f1=64.9 en-es:soft_cons=89.7 en-es:hard_cons=71.5 en-eu:weighted_f1=64.1 en-eu:soft_cons=87.5 en-eu:hard_cons=69.7 es-eu:weighted_f1=62.5 es-eu:soft_cons=88.0 es-eu:hard_cons=68.0
+  struct correct=74.9 neg=0.0 inconsistent=0.0 consistent_wrong=25.1 neg_precision=100.0 neg_recall=100.0 neg_f1=100.0 en-es:weighted_f1=80.2 en-es:soft_cons=100.0 en-es:hard_cons=76.5 en-eu:weighted_f1=78.9 en-eu:soft_cons=100.0 en-eu:hard_cons=74.8 es-eu:weighted_f1=77.6 es-eu:soft_cons=100.0 es-eu:hard_cons=73.5

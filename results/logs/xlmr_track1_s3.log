@@ -1,0 +1,13 @@
+Some weights of XLMRobertaForSequenceClassification were not initialized from the model checkpoint at FacebookAI/xlm-roberta-base and are newly initialized: ['classifier.dense.bias', 'classifier.dense.weight', 'classifier.out_proj.bias', 'classifier.out_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 1.3790310309691862, "kl": 0.0, "val_mean_weighted_f1": 0.19446597635988505, "elapsed_s": 20.9}
+{"epoch": 2, "ce": 1.3351141365095116, "kl": 0.0, "val_mean_weighted_f1": 0.3071761771217052, "elapsed_s": 41.1}
+{"epoch": 3, "ce": 1.2438100176778706, "kl": 0.0, "val_mean_weighted_f1": 0.5252224246500722, "elapsed_s": 61.4}
+{"epoch": 4, "ce": 1.036284756386417, "kl": 0.0, "val_mean_weighted_f1": 0.577512520978031, "elapsed_s": 81.8}
+{"epoch": 5, "ce": 0.8187466026707129, "kl": 0.0, "val_mean_weighted_f1": 0.6230087935265656, "elapsed_s": 102.2}
+{"epoch": 6, "ce": 0.6683596537030977, "kl": 0.0, "val_mean_weighted_f1": 0.650744144740383, "elapsed_s": 122.7}
+{"epoch": 7, "ce": 0.570595498112115, "kl": 0.0, "val_mean_weighted_f1": 0.6643569977056926, "elapsed_s": 143.3}
+{"epoch": 8, "ce": 0.5125917482307587, "kl": 0.0, "val_mean_weighted_f1": 0.6508960561051244, "elapsed_s": 163.3}
+{"epoch": 9, "ce": 0.42966126385091363, "kl": 0.0, "val_mean_weighted_f1": 0.6655392731513463, "elapsed_s": 183.8}
+{"epoch": 10, "ce": 0.3993823137776605, "kl": 0.0, "val_mean_weighted_f1": 0.6582079236873257, "elapsed_s": 204.1}
+done: best epoch 9, val F1 0.6655, 206s

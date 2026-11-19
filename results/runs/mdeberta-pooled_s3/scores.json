@@ -1,0 +1,862 @@
+{
+  "dev": {
+    "track1": {
+      "indep": {
+        "weighted_f1": 0.7990546116883441,
+        "soft_cons": 0.8772563176895307,
+        "hard_cons": 0.8158844765342961,
+        "macro_f1": 0.7737404083960181,
+        "accuracy": 0.7984848484848485,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 133,
+            "FORWARD_ENTAILMENT": 8,
+            "BACKWARD_ENTAILMENT": 9,
+            "NEGATIVE_OTHER": 24
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 11,
+            "FORWARD_ENTAILMENT": 164,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 13
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 9,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 168,
+            "NEGATIVE_OTHER": 11
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 15,
+            "FORWARD_ENTAILMENT": 9,
+            "BACKWARD_ENTAILMENT": 20,
+            "NEGATIVE_OTHER": 62
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.8070198103188132,
+        "soft_cons": 0.9133574007220217,
+        "hard_cons": 0.8483754512635379,
+        "macro_f1": 0.7812709998116399,
+        "accuracy": 0.806060606060606,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 140,
+            "FORWARD_ENTAILMENT": 7,
+            "BACKWARD_ENTAILMENT": 7,
+            "NEGATIVE_OTHER": 20
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 9,
+            "FORWARD_ENTAILMENT": 165,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 14
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 9,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 165,
+            "NEGATIVE_OTHER": 14
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 15,
+            "FORWARD_ENTAILMENT": 9,
+            "BACKWARD_ENTAILMENT": 20,
+            "NEGATIVE_OTHER": 62
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9120334931859215,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8953068592057761,
+        "macro_f1": 0.920565745755769,
+        "accuracy": 0.9121212121212121,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 148,
+            "FORWARD_ENTAILMENT": 13,
+            "BACKWARD_ENTAILMENT": 13,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 12,
+            "FORWARD_ENTAILMENT": 174,
+            "BACKWARD_ENTAILMENT": 4,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 12,
+            "FORWARD_ENTAILMENT": 4,
+            "BACKWARD_ENTAILMENT": 174,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 106
+          }
+        }
+      }
+    },
+    "track2": {
+      "indep": {
+        "weighted_f1": 0.7850352242980891,
+        "soft_cons": 0.8736462093862816,
+        "hard_cons": 0.8014440433212996,
+        "macro_f1": 0.7608112708119852,
+        "accuracy": 0.7863636363636364,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 136,
+            "FORWARD_ENTAILMENT": 10,
+            "BACKWARD_ENTAILMENT": 12,
+            "NEGATIVE_OTHER": 16
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 16,
+            "FORWARD_ENTAILMENT": 162,
+            "BACKWARD_ENTAILMENT": 1,
+            "NEGATIVE_OTHER": 11
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 13,
+            "FORWARD_ENTAILMENT": 1,
+            "BACKWARD_ENTAILMENT": 163,
+            "NEGATIVE_OTHER": 13
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 14,
+            "FORWARD_ENTAILMENT": 13,
+            "BACKWARD_ENTAILMENT": 21,
+            "NEGATIVE_OTHER": 58
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7976561086725457,
+        "soft_cons": 0.9386281588447654,
+        "hard_cons": 0.8483754512635379,
+        "macro_f1": 0.7741551189028539,
+        "accuracy": 0.8,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 142,
+            "FORWARD_ENTAILMENT": 10,
+            "BACKWARD_ENTAILMENT": 10,
+            "NEGATIVE_OTHER": 12
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 14,
+            "FORWARD_ENTAILMENT": 164,
+            "BACKWARD_ENTAILMENT": 1,
+            "NEGATIVE_OTHER": 11
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 14,
+            "FORWARD_ENTAILMENT": 1,
+            "BACKWARD_ENTAILMENT": 164,
+            "NEGATIVE_OTHER": 11
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 14,
+            "FORWARD_ENTAILMENT": 13,
+            "BACKWARD_ENTAILMENT": 21,
+            "NEGATIVE_OTHER": 58
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9032742650166894,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8844765342960289,
+        "macro_f1": 0.9124128186628186,
+        "accuracy": 0.9030303030303031,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 146,
+            "FORWARD_ENTAILMENT": 14,
+            "BACKWARD_ENTAILMENT": 14,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 16,
+            "FORWARD_ENTAILMENT": 172,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 16,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 172,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 106
+          }
+        }
+      }
+    },
+    "track3": {
+      "indep": {
+        "weighted_f1": 0.7575088733431524,
+        "soft_cons": 0.8447653429602888,
+        "hard_cons": 0.7833935018050542,
+        "macro_f1": 0.7269014912620828,
+        "accuracy": 0.7545454545454545,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 123,
+            "FORWARD_ENTAILMENT": 9,
+            "BACKWARD_ENTAILMENT": 11,
+            "NEGATIVE_OTHER": 31
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 11,
+            "FORWARD_ENTAILMENT": 161,
+            "BACKWARD_ENTAILMENT": 1,
+            "NEGATIVE_OTHER": 17
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 10,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 159,
+            "NEGATIVE_OTHER": 18
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 16,
+            "FORWARD_ENTAILMENT": 15,
+            "BACKWARD_ENTAILMENT": 20,
+            "NEGATIVE_OTHER": 55
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7564122149302542,
+        "soft_cons": 0.8772563176895307,
+        "hard_cons": 0.7978339350180506,
+        "macro_f1": 0.7254479512851475,
+        "accuracy": 0.753030303030303,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 122,
+            "FORWARD_ENTAILMENT": 10,
+            "BACKWARD_ENTAILMENT": 10,
+            "NEGATIVE_OTHER": 32
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 10,
+            "FORWARD_ENTAILMENT": 160,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 18
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 10,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 160,
+            "NEGATIVE_OTHER": 18
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 16,
+            "FORWARD_ENTAILMENT": 15,
+            "BACKWARD_ENTAILMENT": 20,
+            "NEGATIVE_OTHER": 55
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.8912108542149453,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8700361010830325,
+        "macro_f1": 0.9018380314406029,
+        "accuracy": 0.8909090909090909,
+        "n": 660,
+        "pairs": 277,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 146,
+            "FORWARD_ENTAILMENT": 14,
+            "BACKWARD_ENTAILMENT": 14,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 17,
+            "FORWARD_ENTAILMENT": 168,
+            "BACKWARD_ENTAILMENT": 5,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 17,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 168,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 106
+          }
+        }
+      }
+    },
+    "track4": {
+      "indep": {
+        "weighted_f1": 0.7373511215555284,
+        "soft_cons": 0.8267148014440433,
+        "hard_cons": 0.7388688327316486,
+        "macro_f1": 0.7107728775206152,
+        "accuracy": 0.7325757575757575,
+        "n": 3960,
+        "pairs": 1662,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 710,
+            "FORWARD_ENTAILMENT": 71,
+            "BACKWARD_ENTAILMENT": 75,
+            "NEGATIVE_OTHER": 188
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 103,
+            "FORWARD_ENTAILMENT": 910,
+            "BACKWARD_ENTAILMENT": 14,
+            "NEGATIVE_OTHER": 113
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 84,
+            "FORWARD_ENTAILMENT": 11,
+            "BACKWARD_ENTAILMENT": 925,
+            "NEGATIVE_OTHER": 120
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 86,
+            "FORWARD_ENTAILMENT": 69,
+            "BACKWARD_ENTAILMENT": 125,
+            "NEGATIVE_OTHER": 356
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7426200090279734,
+        "soft_cons": 0.8760529482551144,
+        "hard_cons": 0.7719614921780987,
+        "macro_f1": 0.7159389681761055,
+        "accuracy": 0.7378787878787879,
+        "n": 3960,
+        "pairs": 1662,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 728,
+            "FORWARD_ENTAILMENT": 68,
+            "BACKWARD_ENTAILMENT": 68,
+            "NEGATIVE_OTHER": 180
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 94,
+            "FORWARD_ENTAILMENT": 919,
+            "BACKWARD_ENTAILMENT": 11,
+            "NEGATIVE_OTHER": 116
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 94,
+            "FORWARD_ENTAILMENT": 11,
+            "BACKWARD_ENTAILMENT": 919,
+            "NEGATIVE_OTHER": 116
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 86,
+            "FORWARD_ENTAILMENT": 69,
+            "BACKWARD_ENTAILMENT": 125,
+            "NEGATIVE_OTHER": 356
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.874056168058803,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8495788206979543,
+        "macro_f1": 0.8860666533401163,
+        "accuracy": 0.8737373737373737,
+        "n": 3960,
+        "pairs": 1662,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 828,
+            "FORWARD_ENTAILMENT": 108,
+            "BACKWARD_ENTAILMENT": 108,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 121,
+            "FORWARD_ENTAILMENT": 998,
+            "BACKWARD_ENTAILMENT": 21,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 121,
+            "FORWARD_ENTAILMENT": 21,
+            "BACKWARD_ENTAILMENT": 998,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 636
+          }
+        }
+      }
+    }
+  },
+  "val": {
+    "track1": {
+      "indep": {
+        "weighted_f1": 0.8010689947576567,
+        "soft_cons": 0.923728813559322,
+        "hard_cons": 0.8813559322033898,
+        "macro_f1": 0.7817862326385541,
+        "accuracy": 0.8122866894197952,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 61,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 76,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 5
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 3,
+            "FORWARD_ENTAILMENT": 1,
+            "BACKWARD_ENTAILMENT": 76,
+            "NEGATIVE_OTHER": 5
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 12,
+            "FORWARD_ENTAILMENT": 6,
+            "BACKWARD_ENTAILMENT": 14,
+            "NEGATIVE_OTHER": 25
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7923726460318541,
+        "soft_cons": 0.940677966101695,
+        "hard_cons": 0.8898305084745762,
+        "macro_f1": 0.772299564570588,
+        "accuracy": 0.8020477815699659,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 60,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 3,
+            "FORWARD_ENTAILMENT": 75,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 7
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 3,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 75,
+            "NEGATIVE_OTHER": 7
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 12,
+            "FORWARD_ENTAILMENT": 6,
+            "BACKWARD_ENTAILMENT": 14,
+            "NEGATIVE_OTHER": 25
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9522184300341296,
+        "soft_cons": 1.0,
+        "hard_cons": 0.940677966101695,
+        "macro_f1": 0.9537433155080213,
+        "accuracy": 0.9522184300341296,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 60,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 3,
+            "FORWARD_ENTAILMENT": 81,
+            "BACKWARD_ENTAILMENT": 1,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 3,
+            "FORWARD_ENTAILMENT": 1,
+            "BACKWARD_ENTAILMENT": 81,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 57
+          }
+        }
+      }
+    },
+    "track2": {
+      "indep": {
+        "weighted_f1": 0.7869899290469675,
+        "soft_cons": 0.9067796610169492,
+        "hard_cons": 0.847457627118644,
+        "macro_f1": 0.7694426881017011,
+        "accuracy": 0.7918088737201365,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 55,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 5,
+            "NEGATIVE_OTHER": 1
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 73,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 8
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 2,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 75,
+            "NEGATIVE_OTHER": 8
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 10,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 13,
+            "NEGATIVE_OTHER": 29
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7835910442364971,
+        "soft_cons": 0.9322033898305084,
+        "hard_cons": 0.8559322033898306,
+        "macro_f1": 0.7668051311433666,
+        "accuracy": 0.78839590443686,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 56,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 5,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 73,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 8
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 73,
+            "NEGATIVE_OTHER": 8
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 10,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 13,
+            "NEGATIVE_OTHER": 29
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9179155554941434,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8983050847457628,
+        "macro_f1": 0.9215249662618084,
+        "accuracy": 0.9180887372013652,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 56,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 5,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 78,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 78,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 57
+          }
+        }
+      }
+    },
+    "track3": {
+      "indep": {
+        "weighted_f1": 0.8237522594464494,
+        "soft_cons": 0.9067796610169492,
+        "hard_cons": 0.864406779661017,
+        "macro_f1": 0.8102977688571695,
+        "accuracy": 0.8293515358361775,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 58,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 3
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 5,
+            "FORWARD_ENTAILMENT": 75,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 3
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 2,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 78,
+            "NEGATIVE_OTHER": 3
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 8,
+            "FORWARD_ENTAILMENT": 7,
+            "BACKWARD_ENTAILMENT": 10,
+            "NEGATIVE_OTHER": 32
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.8204270769363177,
+        "soft_cons": 0.9661016949152542,
+        "hard_cons": 0.8898305084745762,
+        "macro_f1": 0.8076535808509469,
+        "accuracy": 0.825938566552901,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 58,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 2
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 76,
+            "BACKWARD_ENTAILMENT": 2,
+            "NEGATIVE_OTHER": 3
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 4,
+            "FORWARD_ENTAILMENT": 2,
+            "BACKWARD_ENTAILMENT": 76,
+            "NEGATIVE_OTHER": 3
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 8,
+            "FORWARD_ENTAILMENT": 7,
+            "BACKWARD_ENTAILMENT": 10,
+            "NEGATIVE_OTHER": 32
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9182416994101394,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8983050847457628,
+        "macro_f1": 0.92296918767507,
+        "accuracy": 0.9180887372013652,
+        "n": 293,
+        "pairs": 118,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 60,
+            "FORWARD_ENTAILMENT": 3,
+            "BACKWARD_ENTAILMENT": 3,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 5,
+            "FORWARD_ENTAILMENT": 76,
+            "BACKWARD_ENTAILMENT": 4,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 5,
+            "FORWARD_ENTAILMENT": 4,
+            "BACKWARD_ENTAILMENT": 76,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 57
+          }
+        }
+      }
+    },
+    "track4": {
+      "indep": {
+        "weighted_f1": 0.7701713207882162,
+        "soft_cons": 0.8686440677966102,
+        "hard_cons": 0.8177966101694916,
+        "macro_f1": 0.7515520740362956,
+        "accuracy": 0.7753128555176336,
+        "n": 1758,
+        "pairs": 708,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 330,
+            "FORWARD_ENTAILMENT": 16,
+            "BACKWARD_ENTAILMENT": 20,
+            "NEGATIVE_OTHER": 30
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 30,
+            "FORWARD_ENTAILMENT": 432,
+            "BACKWARD_ENTAILMENT": 9,
+            "NEGATIVE_OTHER": 39
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 21,
+            "FORWARD_ENTAILMENT": 5,
+            "BACKWARD_ENTAILMENT": 438,
+            "NEGATIVE_OTHER": 46
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 51,
+            "FORWARD_ENTAILMENT": 49,
+            "BACKWARD_ENTAILMENT": 79,
+            "NEGATIVE_OTHER": 163
+          }
+        }
+      },
+      "joint": {
+        "weighted_f1": 0.7660469927195946,
+        "soft_cons": 0.9152542372881356,
+        "hard_cons": 0.8418079096045198,
+        "macro_f1": 0.7473280905080941,
+        "accuracy": 0.7707622298065984,
+        "n": 1758,
+        "pairs": 708,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 328,
+            "FORWARD_ENTAILMENT": 18,
+            "BACKWARD_ENTAILMENT": 18,
+            "NEGATIVE_OTHER": 32
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 27,
+            "FORWARD_ENTAILMENT": 432,
+            "BACKWARD_ENTAILMENT": 7,
+            "NEGATIVE_OTHER": 44
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 27,
+            "FORWARD_ENTAILMENT": 7,
+            "BACKWARD_ENTAILMENT": 432,
+            "NEGATIVE_OTHER": 44
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 51,
+            "FORWARD_ENTAILMENT": 49,
+            "BACKWARD_ENTAILMENT": 79,
+            "NEGATIVE_OTHER": 163
+          }
+        }
+      },
+      "struct": {
+        "weighted_f1": 0.9114644639461893,
+        "soft_cons": 1.0,
+        "hard_cons": 0.8898305084745762,
+        "macro_f1": 0.9155219124091525,
+        "accuracy": 0.9112627986348123,
+        "n": 1758,
+        "pairs": 708,
+        "confusion": {
+          "EQUIVALENCE": {
+            "EQUIVALENCE": 344,
+            "FORWARD_ENTAILMENT": 26,
+            "BACKWARD_ENTAILMENT": 26,
+            "NEGATIVE_OTHER": 0
+          },
+          "FORWARD_ENTAILMENT": {
+            "EQUIVALENCE": 33,
+            "FORWARD_ENTAILMENT": 458,
+            "BACKWARD_ENTAILMENT": 19,
+            "NEGATIVE_OTHER": 0
+          },
+          "BACKWARD_ENTAILMENT": {
+            "EQUIVALENCE": 33,
+            "FORWARD_ENTAILMENT": 19,
+            "BACKWARD_ENTAILMENT": 458,
+            "NEGATIVE_OTHER": 0
+          },
+          "NEGATIVE_OTHER": {
+            "EQUIVALENCE": 0,
+            "FORWARD_ENTAILMENT": 0,
+            "BACKWARD_ENTAILMENT": 0,
+            "NEGATIVE_OTHER": 342
+          }
+        }
+      }
+    }
+  }
+}

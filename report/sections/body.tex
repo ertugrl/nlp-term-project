@@ -1,0 +1,56 @@
+\section{Introduction}
+
+Natural logic distinguishes \emph{forward entailment} ($a \sqsubset b$), \emph{backward entailment} ($a \sqsupset b$) and \emph{equivalence} between two expressions \citep{maccartney2009natural}. These relations obey a deterministic reversal algebra: swapping premise and hypothesis maps \FE$\leftrightarrow$\BE and leaves \EQ unchanged. DiCo-NLI (SemEval-2027 Task~2) turns this algebra into an evaluation target. Every reversible phrase pair is classified in both directions, and systems are scored with weighted F1 together with two pair-level metrics: \emph{SoftCons} (are the two predictions compatible under reversal?) and \emph{HardCons} (are both correct?). The task covers English, Spanish, Basque and a mixed-language track. A pilot study on the English data found that even fine-tuned encoders are inconsistent on 16--20\% of pairs, and decoder-only models on far more \citep{apaolaza2026assessing}, a finding that echoes the reversal curse of autoregressive LMs \citep{berglund2024reversal}.
+
+Instead of hoping that a classifier internalises the reversal algebra, we observe that the evaluation data exposes \emph{both} directions of every reversible pair, and we decode them \emph{jointly}. A product of experts \citep{hinton2002training} over the two directional posteriors, tied by the reversal map, yields predictions that are consistent by construction. It requires no additional training and pools evidence from two views of the same relation.
+
+Our contributions are:
+(i) a multilingual encoder study on all four tracks (XLM-R, mDeBERTa and NLI-pretrained mDeBERTa; in-track, zero-shot and pooled training);
+(ii) \emph{joint bidirectional decoding}, which improves HardCons in all 72 of our evaluations (+3.9 points on average) at no training cost, and is more effective than a training-time consistency loss;
+(iii) an error analysis showing that directional inconsistency is a minor error source for fine-tuned encoders, while the \NO decision is the main one;
+(iv) two benchmark observations: SoftCons is maximised by an input-independent constant predictor, and \NO items can be identified from the pair structure alone.
+
+\section{Task and Data}
+\label{sec:task}
+
+\paragraph{Labels and tracks.} Each instance is an ordered phrase pair $(a,b)$ labelled \EQ, \FE, \BE or \NO (any other PhrasIS relation, e.g.\ similarity or opposition). $\Rev(\EQ)=\EQ$, $\Rev(\FE)=\BE$ and $\Rev(\BE)=\FE$; \NO has no reverse and is only used for F1. The data are derived from the reversible subset of PhrasIS \citep{lopezgazpio2024phrasis}, built from image captions and news headlines. The Spanish and Basque versions were produced by machine translation and verified by bilingual experts. Splits are made at the level of source pairs, so no source pair is shared across splits. Tracks 1--3 are monolingual (3{,}042 train / 660 dev instances each). Track~4 mixes languages: every source pair appears in all six ordered cross-lingual combinations (en-es, es-en, \dots; 18{,}252 / 3{,}960 instances). The reverse of an en-es instance is an es-en instance in which the phrases have swapped slots.
+
+\paragraph{Metrics.} Let $\mathcal{P}$ be the set of reversible pairs $(x, \bar{x})$ and $f$ the system. Then
+$\text{SoftCons} = \frac{1}{|\mathcal{P}|}\sum \mathbb{I}[f(x)\neq\NO \wedge f(\bar{x})=\Rev(f(x))]$ and
+$\text{HardCons} = \frac{1}{|\mathcal{P}|}\sum \mathbb{I}[f(x)=y \wedge f(\bar{x})=\bar{y}]$, where $y$ and $\bar{y}$ are the gold labels.
+SoftCons ignores the gold labels, while HardCons is paired accuracy.
+
+\paragraph{Two observations.} Inspecting the public data reveals two properties that matter for system design and for interpreting scores.
+\textbf{(O1)} Because SoftCons is gold-independent, an input-independent system that always predicts \EQ obtains SoftCons $=100\%$ (Table~\ref{tab:main}). SoftCons is therefore only meaningful alongside F1 and HardCons.
+\textbf{(O2)} In both train and dev, every reversible item occurs in both directions and every \NO item in exactly one. The size of an item's reversal group, which can be computed from participant-visible fields, therefore identifies \NO with 100\% precision and recall. If the test set preserves this property, a structure-aware decoder can exploit it. We report such a decoder separately as a diagnostic (\textit{struct}) and do not use it in our main system.
+
+\section{Related Work}
+
+\paragraph{Logical consistency.} Consistency constraints have been injected into NLI models through adversarial regularisation \citep{minervini2018adversarially} and through logic-derived training losses for symmetry and transitivity \citep{li2019logic}. Similar ideas have been applied to QA \citep{asai2020logic}. Consistency benchmarks include BECEL \citep{jang2022becel}, and \citet{wu2025transitive} evaluate transitive self-consistency without gold labels. These works mostly enforce consistency during training; we enforce it exactly at inference time and contrast the two approaches.
+\paragraph{Reversal curse.} Autoregressive LMs trained on ``A is B'' fail to infer ``B is A'' \citep{berglund2024reversal,lin2024delving}, which has motivated reverse training \citep{golovneva2024reverse}. DiCo-NLI is inspired by this line of work but probes relational inference over phrases rather than parametric factual recall.
+\paragraph{Artifacts.} NLI data are known to contain annotation artifacts \citep{gururangan2018annotation}, and translated evaluation data contain translation artifacts \citep{artetxe2020translation}. Observation O2 is a structural artifact of the same kind.
+
+\section{System}
+\label{sec:method}
+
+\paragraph{Directional classifier.} An encoder reads the pair as \texttt{[CLS]}\,$a$\,\texttt{[SEP]}\,$b$, and a linear head gives $p_\theta(y \mid a,b)$ over the four labels. We train with cross-entropy on all training instances, which already contain both directions of every reversible pair. We compare XLM-R\textsubscript{base} \citep{conneau2020unsupervised}, mDeBERTa-v3\textsubscript{base} \citep{he2023debertav3}, and an mDeBERTa-v3\textsubscript{base} checkpoint that was further fine-tuned on multilingual NLI data \citep[XNLI and machine-translated English NLI corpora;][]{conneau2018xnli,laurer2024less}. The last model tests intermediate-task transfer from sentence-level NLI; its 3-way head is replaced by a new 4-way head.
+
+\paragraph{Joint bidirectional decoding.} At test time we group instances into reversal groups using only participant-visible fields: same \texttt{pair\_id}, with the two (language, phrase) slots swapped. For a group $\{(a,b),(b,a)\}$ we choose
+\begin{equation}
+y^\star = \operatorname*{arg\,max}_{y}\, \log p(y|a,b) + \log p(\Rev(y)|b,a),
+\label{eq:joint}
+\end{equation}
+with $\Rev(\NO)=\NO$, and we output $y^\star$ for $(a,b)$ and $\Rev(y^\star)$ for $(b,a)$. Single-direction groups use the plain argmax. Eq.~\ref{eq:joint} is a product of two experts that see the same relation from opposite sides. It (i) guarantees SoftCons $=1$ on every pair not jointly labelled \NO, (ii) works like test-time augmentation, since evidence from the more confident direction can correct the other, and (iii) is model-agnostic and needs no retraining. The diagnostic \textit{struct} variant additionally assigns \NO to all single-direction groups and excludes \NO from Eq.~\ref{eq:joint} (O2).
+
+\paragraph{Consistency-regularised training.} As a training-time counterpart, we add a symmetric KL term between $p_\theta(\cdot\mid a,b)$ and the reversed distribution $\Rev\circ p_\theta(\cdot\mid b,a)$ in the spirit of \citet{li2019logic}: $\mathcal{L} = \mathcal{L}_{\text{CE}} + \lambda\,\tfrac{1}{2}\big[\mathrm{KL}(p_{ab}\Vert \Rev\,p_{ba}) + \mathrm{KL}(\Rev\,p_{ba}\Vert p_{ab})\big]$. Both directions of a pair are always placed in the same mini-batch. This lets us ask whether consistency learned in training brings the same gains as consistency enforced in decoding.
+
+\paragraph{Cross-lingual transfer.} Besides one model per track (\emph{in-track}), we train on English only and apply the model zero-shot to the other tracks (\emph{EN only}), and we train a single model on the union of all four training sets (\emph{pooled}).
+
+\input{sections/experiments}
+
+\section{Conclusion}
+
+We treated directional consistency in DiCo-NLI as a decoding problem. Scoring both directions of a pair and decoding them jointly under the reversal map is free and model-agnostic. It improved paired accuracy in every evaluation, with the largest gains for weaker models, and it was more effective than learning consistency through a training loss. Our analysis indicates that, once directions are tied together, the remaining difficulty is recognising \emph{non-reversible} relations. On the public data this decision can be bypassed through the pair structure, so we recommend that the official test data hide it (e.g.\ by also presenting \NO items in both directions).
+
+\section*{Limitations}
+The official test set is not yet released, so all reported numbers are on the public dev split, and model selection uses a held-out slice of train. Joint decoding assumes that both directions of a reversible pair appear in the evaluation data, which holds for DiCo-NLI by design but not for single-direction NLI. The Spanish and Basque data are translations, so translation artifacts may inflate cross-lingual results. Due to compute limits (a single laptop GPU) we use base-size encoders with frozen word embeddings and three seeds per configuration.

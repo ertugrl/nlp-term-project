@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Training data & EN & ES & EU & Mixed \\
+\midrule
+In-track & 84.5 & 81.1 & 78.8 & 76.6 \\
+EN only & 84.0 & 80.7 & 68.5 & 54.4 \\
+Pooled & 84.8 & 83.6 & 81.5 & 77.7 \\
+\bottomrule
+\end{tabular}
+\caption{Dev HardCons (\%) of mDeBERTa with joint decoding (3 seeds) by training data: the track's own (in-track), Track~1 only (zero-shot on the others), or all four tracks (pooled).}
+\label{tab:transfer}
+\end{table}

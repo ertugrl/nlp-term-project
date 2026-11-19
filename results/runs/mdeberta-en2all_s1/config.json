@@ -1,0 +1,22 @@
+{
+  "model": "microsoft/mdeberta-v3-base",
+  "train_tracks": [
+    "track1"
+  ],
+  "eval_tracks": [
+    "track1",
+    "track2",
+    "track3",
+    "track4"
+  ],
+  "run_name": "mdeberta-en2all_s1",
+  "seed": 1,
+  "epochs": 10,
+  "lr": 5e-05,
+  "bs": 32,
+  "max_len": 64,
+  "warmup": 0.1,
+  "wd": 0.01,
+  "cons_lambda": 0.0,
+  "train_embeddings": false
+}

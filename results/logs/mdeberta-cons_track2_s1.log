@@ -1,0 +1,15 @@
+/Users/ertugrulsahin/Desktop/MSc/BLG505/NLP Term Project/.venv/lib/python3.10/site-packages/transformers/convert_slow_tokenizer.py:561: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at microsoft/mdeberta-v3-base and are newly initialized: ['classifier.bias', 'classifier.weight', 'pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 1.3052799509859634, "kl": 0.017763545319181066, "val_mean_weighted_f1": 0.5415086563252284, "elapsed_s": 32.8}
+{"epoch": 2, "ce": 0.8354818021709268, "kl": 0.07119513624771075, "val_mean_weighted_f1": 0.7515977036817318, "elapsed_s": 65.8}
+{"epoch": 3, "ce": 0.5930898733098399, "kl": 0.07807331328248521, "val_mean_weighted_f1": 0.7931525737951023, "elapsed_s": 98.7}
+{"epoch": 4, "ce": 0.4714680223471739, "kl": 0.05908077688549052, "val_mean_weighted_f1": 0.8145608131945559, "elapsed_s": 131.5}
+{"epoch": 5, "ce": 0.4091381239281459, "kl": 0.05618955217174847, "val_mean_weighted_f1": 0.8161581532233917, "elapsed_s": 164.4}
+{"epoch": 6, "ce": 0.2515193040257898, "kl": 0.043832836297993685, "val_mean_weighted_f1": 0.8050158690825897, "elapsed_s": 197.1}
+{"epoch": 7, "ce": 0.17487080939028454, "kl": 0.031929891810741746, "val_mean_weighted_f1": 0.8054578787054831, "elapsed_s": 229.5}
+{"epoch": 8, "ce": 0.13330582520742526, "kl": 0.029373771034652132, "val_mean_weighted_f1": 0.8219248700927981, "elapsed_s": 261.9}
+{"epoch": 9, "ce": 0.11973094358108938, "kl": 0.015131160180317238, "val_mean_weighted_f1": 0.8184249543779243, "elapsed_s": 294.7}
+{"epoch": 10, "ce": 0.10530559437095442, "kl": 0.02133090993579985, "val_mean_weighted_f1": 0.8057098875497608, "elapsed_s": 327.0}
+done: best epoch 8, val F1 0.8219, 330s

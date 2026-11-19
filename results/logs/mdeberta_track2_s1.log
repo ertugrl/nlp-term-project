@@ -1,0 +1,15 @@
+/Users/ertugrulsahin/Desktop/MSc/BLG505/NLP Term Project/.venv/lib/python3.10/site-packages/transformers/convert_slow_tokenizer.py:561: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at microsoft/mdeberta-v3-base and are newly initialized: ['classifier.bias', 'classifier.weight', 'pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 1.2914865784261418, "kl": 0.0, "val_mean_weighted_f1": 0.5850003601360396, "elapsed_s": 34.7}
+{"epoch": 2, "ce": 0.7453773661770604, "kl": 0.0, "val_mean_weighted_f1": 0.7754499780944296, "elapsed_s": 69.7}
+{"epoch": 3, "ce": 0.5186035628007217, "kl": 0.0, "val_mean_weighted_f1": 0.8213888697726658, "elapsed_s": 103.6}
+{"epoch": 4, "ce": 0.3763150212947618, "kl": 0.0, "val_mean_weighted_f1": 0.7811100293636689, "elapsed_s": 137.8}
+{"epoch": 5, "ce": 0.30814289149235596, "kl": 0.0, "val_mean_weighted_f1": 0.824127013364701, "elapsed_s": 171.7}
+{"epoch": 6, "ce": 0.18531197532155047, "kl": 0.0, "val_mean_weighted_f1": 0.8422047275686454, "elapsed_s": 206.1}
+{"epoch": 7, "ce": 0.11060119739294737, "kl": 0.0, "val_mean_weighted_f1": 0.8363358831925747, "elapsed_s": 240.3}
+{"epoch": 8, "ce": 0.10066025100391486, "kl": 0.0, "val_mean_weighted_f1": 0.8293211220669056, "elapsed_s": 273.9}
+{"epoch": 9, "ce": 0.06532224676233124, "kl": 0.0, "val_mean_weighted_f1": 0.8184464472775899, "elapsed_s": 308.4}
+{"epoch": 10, "ce": 0.0598307015130889, "kl": 0.0, "val_mean_weighted_f1": 0.8208335808863281, "elapsed_s": 343.5}
+done: best epoch 6, val F1 0.8422, 349s

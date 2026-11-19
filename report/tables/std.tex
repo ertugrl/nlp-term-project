@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccccccccccc}
+\toprule
+ & & \multicolumn{3}{c}{EN} & \multicolumn{3}{c}{ES} & \multicolumn{3}{c}{EU} & \multicolumn{3}{c}{Mixed} \\
+Model & Dec. & F1 & Soft & Hard & F1 & Soft & Hard & F1 & Soft & Hard & F1 & Soft & Hard \\
+\midrule
+XLM-R & indep & 69.1$\pm$1.6 & 82.7$\pm$1.3 & 72.1$\pm$2.2 & 54.2$\pm$10.7 & 66.1$\pm$15.2 & 51.9$\pm$16.1 & 61.1$\pm$3.8 & 80.5$\pm$2.0 & 63.7$\pm$0.7 & 63.4$\pm$0.2 & 79.3$\pm$1.2 & 64.9$\pm$0.7 \\
+ & joint & 69.6$\pm$1.6 & 93.9$\pm$0.3 & 77.3$\pm$1.1 & 58.6$\pm$5.7 & 93.5$\pm$4.1 & 68.4$\pm$2.8 & 61.0$\pm$3.0 & 94.3$\pm$2.7 & 70.0$\pm$1.2 & 63.8$\pm$0.1 & 88.4$\pm$1.3 & 69.7$\pm$0.7 \\
+mDeBERTa & indep & 79.6$\pm$0.9 & 87.1$\pm$1.7 & 81.0$\pm$0.6 & 77.3$\pm$0.6 & 85.6$\pm$0.8 & 78.3$\pm$0.3 & 76.5$\pm$0.7 & 82.7$\pm$2.3 & 75.7$\pm$1.9 & 73.4$\pm$1.0 & 81.8$\pm$1.6 & 73.8$\pm$1.5 \\
+ & joint & 80.3$\pm$1.3 & 91.8$\pm$0.6 & 84.5$\pm$1.0 & 77.9$\pm$0.7 & 89.3$\pm$0.9 & 81.1$\pm$1.2 & 76.7$\pm$0.4 & 87.5$\pm$2.1 & 78.8$\pm$1.2 & 73.5$\pm$0.9 & 86.2$\pm$1.0 & 76.6$\pm$1.0 \\
+mDeBERTa-NLI & indep & 82.8$\pm$0.7 & 88.9$\pm$0.6 & 84.6$\pm$0.9 & 79.0$\pm$0.8 & 85.0$\pm$0.7 & 79.5$\pm$0.7 & 75.1$\pm$1.7 & 81.8$\pm$2.3 & 75.1$\pm$2.1 & 74.7$\pm$0.9 & 82.4$\pm$1.8 & 74.7$\pm$1.6 \\
+ & joint & 83.0$\pm$0.9 & 94.2$\pm$0.3 & 87.5$\pm$1.2 & 78.7$\pm$0.7 & 90.4$\pm$0.5 & 82.2$\pm$0.6 & 75.6$\pm$1.3 & 86.8$\pm$1.1 & 78.5$\pm$1.5 & 74.8$\pm$0.8 & 88.4$\pm$1.5 & 78.3$\pm$1.4 \\
+mDeBERTa+$\mathcal{L}_\text{cons}$ & indep & 80.7$\pm$0.4 & 90.0$\pm$2.3 & 83.9$\pm$1.6 & 76.5$\pm$1.0 & 86.9$\pm$2.0 & 78.6$\pm$1.5 & 75.1$\pm$0.3 & 85.4$\pm$1.2 & 77.4$\pm$1.0 & 72.4$\pm$0.5 & 85.7$\pm$1.2 & 75.4$\pm$0.9 \\
+ & joint & 80.8$\pm$0.4 & 92.5$\pm$0.7 & 85.3$\pm$1.2 & 76.8$\pm$1.5 & 91.1$\pm$1.6 & 81.2$\pm$1.8 & 75.3$\pm$0.3 & 88.0$\pm$0.7 & 79.3$\pm$0.7 & 72.5$\pm$0.4 & 88.6$\pm$1.3 & 77.2$\pm$0.9 \\
+\bottomrule
+\end{tabular}}
+\caption{Dev results (\%), mean $\pm$ standard deviation over three seeds.}
+\label{tab:std}
+\end{table*}

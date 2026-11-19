@@ -1,0 +1,9 @@
+/Users/ertugrulsahin/Desktop/MSc/BLG505/NLP Term Project/.venv/lib/python3.10/site-packages/transformers/convert_slow_tokenizer.py:561: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at microsoft/mdeberta-v3-base and are newly initialized: ['classifier.bias', 'classifier.weight', 'pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"epoch": 1, "ce": 0.9045078746732289, "kl": 0.0, "val_mean_weighted_f1": 0.7388936753307357, "elapsed_s": 197.4}
+{"epoch": 2, "ce": 0.3180887981235867, "kl": 0.0, "val_mean_weighted_f1": 0.7536226928622398, "elapsed_s": 396.9}
+{"epoch": 3, "ce": 0.11292780449891723, "kl": 0.0, "val_mean_weighted_f1": 0.7624718877266239, "elapsed_s": 596.8}
+{"epoch": 4, "ce": 0.04166076121981795, "kl": 0.0, "val_mean_weighted_f1": 0.7808639248095516, "elapsed_s": 797.2}
+done: best epoch 4, val F1 0.7809, 815s

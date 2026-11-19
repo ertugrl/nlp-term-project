@@ -1,0 +1,17 @@
+\section{Per-seed Variability}
+\label{app:std}
+
+\input{tables/std}
+
+\section{Hyperparameters and Implementation}
+\label{app:hparams}
+
+\begin{itemize}\itemsep0pt
+\item Checkpoints (Hugging Face): \texttt{FacebookAI/xlm-roberta-base}, \texttt{microsoft/mdeberta-v3-base} and \texttt{MoritzLaurer/mDeBERTa-v3-base-xnli-}\allowbreak\texttt{multilingual-nli-2mil7}.
+\item Learning rate (selected on the EN validation slice from $\{2,5\}\cdot10^{-5}$): XLM-R $2\cdot10^{-5}$, mDeBERTa $5\cdot10^{-5}$, mDeBERTa-NLI $5\cdot10^{-5}$.
+\item Epochs: up to 10 (monolingual, EN-only) or 4 (mixed, pooled); best epoch by validation weighted F1 with independent decoding.
+\item Optimisation: AdamW, batch size 32 (both directions of a pair always in the same batch), 10\% linear warm-up then linear decay, weight decay 0.01, gradient clipping 1.0, maximum length 64 tokens. Word embeddings are frozen (250k-token vocabularies).
+\item Consistency loss weight $\lambda=1$ (not tuned).
+\item Seeds 1, 2, 3; seed ensembles average the predicted probabilities.
+\item Validation slice: Source pairs whose MD5 hash of \texttt{pair\_id} falls in the lowest 10\% (175 of 1{,}760 training source pairs).
+\end{itemize}
