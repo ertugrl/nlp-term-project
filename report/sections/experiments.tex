@@ -32,21 +32,21 @@ All components of Section~\ref{sec:method} are implemented and evaluated. Until 
 (ii) attack the main error source, \NO detection, through calibration of the \NO logit on the validation slice and a larger encoder (XLM-R\textsubscript{large});
 (iii) carry out a qualitative error analysis by phrase type and translation quality;
 (iv) optionally, compare with zero/few-shot LLMs to connect our results to the reversal-curse literature.
-Table~\ref{tab:plan} lists the work packages.
+Table~\ref{tab:plan} lists the responsibilities.
 
-% TODO(team): assign members to work packages.
 \begin{table}[h]
 \centering\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}ll@{}}
 \toprule
-Work package & Member \\
+Responsibility & Member \\
 \midrule
-WP1: data and artifact analysis, baselines & TBD \\
-WP2: encoder fine-tuning, NLI transfer & TBD \\
-WP3: joint decoding, consistency loss & TBD \\
-WP4: cross-lingual analysis, \NO calib. & TBD \\
+Coordination, experiments & Ertu\u{g}rul \c{S}ahin \\
+Evaluation, writing, reviews & Metin Ertekin K\"{u}\c{c}\"{u}k \\
+Modelling, consistency & Bekir Okudurlar \\
+Data, cross-lingual analysis & Mungunsarnai Tumurkhuu \\
 \bottomrule
 \end{tabular}
-\caption{Work packages. Timeline: interim report 23 Nov; peer reviews 30 Nov; WP2--4 extensions 1--14 Dec; final report 28 Dec.}
+\caption{Responsibilities. Modelling: encoders, NLI transfer, joint decoding, consistency loss. Data: artifacts, baselines, transfer, \NO analysis. Timeline: peer reviews 30 Nov; extensions 1--14 Dec; final report 28 Dec.}
 \label{tab:plan}
 \end{table}
