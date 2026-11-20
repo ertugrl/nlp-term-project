@@ -1,0 +1,34 @@
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccccccccccc}
+\toprule
+ & \multicolumn{3}{c}{EN} & \multicolumn{3}{c}{ES} & \multicolumn{3}{c}{EU} & \multicolumn{3}{c}{Karma} & \multicolumn{3}{c}{Ortalama} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10} \cmidrule(lr){11-13} \cmidrule(lr){14-16}
+Sistem & F1 & Soft & Hard & F1 & Soft & Hard & F1 & Soft & Hard & F1 & Soft & Hard & F1 & Soft & Hard \\
+\midrule
+Rastgele & 25.3 & 18.1 & 5.5 & 25.3 & 18.1 & 5.5 & 25.3 & 18.1 & 5.5 & 25.1 & 18.4 & 6.2 & 25.2 & 18.1 & 5.7 \\
+Sabit \EQ & 11.0 & 100.0 & 31.4 & 11.0 & 100.0 & 31.4 & 11.0 & 100.0 & 31.4 & 11.0 & 100.0 & 31.4 & 11.0 & 100.0 & 31.4 \\
+\midrule
+XLM-R & 69.1 & 82.7 & 72.1 & 54.2 & 66.1 & 51.9 & 61.1 & 80.5 & 63.7 & 63.4 & 79.3 & 64.9 & 62.0 & 77.1 & 63.1 \\
+\quad + ortak çözümleme & 69.6 & 93.9 & 77.3 & 58.6 & \textbf{93.5} & 68.4 & 61.0 & \textbf{94.3} & 70.0 & 63.8 & 88.4 & 69.7 & 63.3 & \textbf{92.5} & 71.3 \\
+\midrule
+mDeBERTa & 79.6 & 87.1 & 81.0 & 77.3 & 85.6 & 78.3 & 76.5 & 82.7 & 75.7 & 73.4 & 81.8 & 73.8 & 76.7 & 84.3 & 77.2 \\
+\quad + ortak çözümleme & 80.3 & 91.8 & 84.5 & 77.9 & 89.3 & 81.1 & \textbf{76.7} & 87.5 & 78.8 & 73.5 & 86.2 & 76.6 & 77.1 & 88.7 & 80.2 \\
+\midrule
+mDeBERTa-NLI & 82.8 & 88.9 & 84.6 & \textbf{79.0} & 85.0 & 79.5 & 75.1 & 81.8 & 75.1 & 74.7 & 82.4 & 74.7 & 77.9 & 84.5 & 78.5 \\
+\quad + ortak çözümleme & 83.0 & 94.2 & 87.5 & 78.7 & 90.4 & 82.2 & 75.6 & 86.8 & 78.5 & 74.8 & 88.4 & 78.3 & 78.0 & 89.9 & 81.6 \\
+\midrule
+mDeBERTa + $\mathcal{L}_\text{cons}$ & 80.7 & 90.0 & 83.9 & 76.5 & 86.9 & 78.6 & 75.1 & 85.4 & 77.4 & 72.4 & 85.7 & 75.4 & 76.2 & 87.0 & 78.8 \\
+\quad + ortak çözümleme & 80.8 & 92.5 & 85.3 & 76.8 & 91.1 & 81.2 & 75.3 & 88.0 & \textbf{79.3} & 72.5 & 88.6 & 77.2 & 76.3 & 90.0 & 80.8 \\
+\midrule
+mDeBERTa-NLI, 3 tohum topluluğu & 83.7 & 89.9 & 86.6 & 78.8 & 87.4 & 80.5 & 76.4 & 82.7 & 77.3 & \textbf{76.0} & 83.9 & 76.6 & 78.7 & 86.0 & 80.2 \\
+\quad + ortak çözümleme & \textbf{84.3} & \textbf{94.9} & \textbf{89.9} & 78.9 & 91.3 & \textbf{82.7} & 76.2 & 85.9 & 79.1 & 75.9 & \textbf{88.9} & \textbf{79.5} & \textbf{78.9} & 90.3 & \textbf{82.8} \\
+\midrule
+\textit{mDeBERTa + struct (O2)} & \textit{91.2} & \textit{100.0} & \textit{89.5} & \textit{90.2} & \textit{100.0} & \textit{88.2} & \textit{88.7} & \textit{100.0} & \textit{86.5} & \textit{87.9} & \textit{100.0} & \textit{85.6} & \textit{89.5} & \textit{100.0} & \textit{87.5} \\
+\bottomrule
+\end{tabular}}
+\caption{Dev sonuçları (\%). Öğrenen sistemler: 3 tohumun ortalaması (standart sapmalar Ek~\ref{app:std}'de). \emph{ortak}: ortak çift yönlü çözümleme (Denk.~\ref{eq:joint}). Kalın: tanı satırı dışındaki en iyi değer. Son satır O2 gözlemini kullanır ve yalnızca tanı amacıyla verilmiştir.}
+\label{tab:main}
+\end{table*}

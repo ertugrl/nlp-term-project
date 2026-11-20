@@ -1,21 +1,82 @@
 """Generate the LaTeX tables of the report from results/ (run after evaluate.py, make_tables.py, analysis.py).
 
+    python src/make_latex.py            -> report/tables/     (English report)
+    python src/make_latex.py --lang tr  -> report/tables_tr/  (Turkish report)
+
 Rows whose runs are missing are skipped, so this can be re-run as experiments finish.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 
 import numpy as np
 
 from dico.common import RESULTS, ROOT, TRACKS
 
-OUT = ROOT / "report" / "tables"
 METRICS = ["weighted_f1", "soft_cons", "hard_cons"]
 SUMMARY = json.loads((RESULTS / "summary.json").read_text())["dev"]
 BASE = json.loads((RESULTS / "baselines" / "scores_dev.json").read_text())
 ANALYSIS = json.loads((RESULTS / "analysis.json").read_text()) if (RESULTS / "analysis.json").exists() else {}
+
+STRINGS = {
+    "en": {
+        "random": "Random",
+        "const": "Constant \\EQ",
+        "joint_row": "\\quad + joint decoding",
+        "ens": "mDeBERTa-NLI 3-seed ens.",
+        "mixed": "Mixed",
+        "avg": "Average",
+        "system": "System",
+        "dec": "Dec.",
+        "indep": "indep",
+        "joint": "joint",
+        "ok": "OK",
+        "inc": "Inc.",
+        "wrong": "Wrong",
+        "train_data": "Training data",
+        "in_track": "In-track",
+        "en_only": "EN only",
+        "pooled": "Pooled",
+        "cap_main": "Dev results (\\%). Learned systems: mean over 3 seeds (std.\\ in Appendix~\\ref{app:std}). "
+        "\\emph{joint}: joint bidirectional decoding (Eq.~\\ref{eq:joint}). Bold: best non-diagnostic value. "
+        "The last row exploits observation O2 and is shown as a diagnostic only.",
+        "cap_err": "Outcome of gold reversible pairs (\\% of pairs, dev, mean over tracks and seeds): both correct (OK), "
+        "a direction predicted \\NO, inconsistent (Inc.), or consistent but wrong. F1\\textsubscript{\\NO}: instance-level F1 of \\NO.",
+        "cap_transfer": "Dev HardCons (\\%) of mDeBERTa with joint decoding (3 seeds) by training data: the track's own (in-track), "
+        "Track~1 only (zero-shot on the others), or all four tracks (pooled).",
+        "cap_std": "Dev results (\\%), mean $\\pm$ standard deviation over three seeds.",
+    },
+    "tr": {
+        "random": "Rastgele",
+        "const": "Sabit \\EQ",
+        "joint_row": "\\quad + ortak çözümleme",
+        "ens": "mDeBERTa-NLI, 3 tohum topluluğu",
+        "mixed": "Karma",
+        "avg": "Ortalama",
+        "system": "Sistem",
+        "dec": "Çöz.",
+        "indep": "ayrı",
+        "joint": "ortak",
+        "ok": "Doğru",
+        "inc": "Tuts.",
+        "wrong": "Yanlış",
+        "train_data": "Eğitim verisi",
+        "in_track": "Kendi verisi",
+        "en_only": "Yalnız EN",
+        "pooled": "Birleşik",
+        "cap_main": "Dev sonuçları (\\%). Öğrenen sistemler: 3 tohumun ortalaması (standart sapmalar Ek~\\ref{app:std}'de). "
+        "\\emph{ortak}: ortak çift yönlü çözümleme (Denk.~\\ref{eq:joint}). Kalın: tanı satırı dışındaki en iyi değer. "
+        "Son satır O2 gözlemini kullanır ve yalnızca tanı amacıyla verilmiştir.",
+        "cap_err": "Altın tersinir çiftlerin sonucu (çiftlerin \\%'si; dev, track ve tohum ortalaması): iki yön de doğru (Doğru), "
+        "bir yöne \\NO tahmin edilmiş, tutarsız (Tuts.) ya da tutarlı ama yanlış. F1\\textsubscript{\\NO}: \\NO sınıfının örnek düzeyindeki F1'i.",
+        "cap_transfer": "Ortak çözümlemeli mDeBERTa'nın eğitim verisine göre dev HardCons değeri (\\%, 3 tohum): track'in kendi verisi, "
+        "yalnızca Track~1 (diğerlerinde sıfır-örnek) ya da dört track'in birleşimi.",
+        "cap_std": "Dev sonuçları (\\%), üç tohum üzerinden ortalama $\\pm$ standart sapma.",
+    },
+}
+S = STRINGS["en"]
 
 
 def seed_mean(model: str, track: str, mode: str, metric: str, std: bool = False):
@@ -62,26 +123,30 @@ def bold_best(rows: list[tuple[str, list]], skip: set[int]) -> list[tuple[str, l
 def row_values(fn) -> list:
     vals = [fn(t, m) for t in TRACKS for m in METRICS]
     avg = []
-    for k, m in enumerate(METRICS):
+    for k in range(len(METRICS)):
         col = [vals[i * 3 + k] for i in range(len(TRACKS))]
         avg.append(float(np.mean(col)) if all(v is not None for v in col) else None)
     return vals + avg
 
 
+def track_names(with_avg: bool) -> list[str]:
+    return ["EN", "ES", "EU", S["mixed"]] + ([S["avg"]] if with_avg else [])
+
+
 def main_table() -> str:
     spec = [
-        ("Random", lambda t, m: BASE[t]["random"][m]),
-        ("Constant \\EQ", lambda t, m: BASE[t]["constant_eq"][m]),
+        (S["random"], lambda t, m: BASE[t]["random"][m]),
+        (S["const"], lambda t, m: BASE[t]["constant_eq"][m]),
     ]
     models = [("xlmr", "XLM-R"), ("mdeberta", "mDeBERTa"), ("mdeberta-xnli", "mDeBERTa-NLI"), ("mdeberta-cons", "mDeBERTa + $\\mathcal{L}_\\text{cons}$")]
     for key, name in models:
         if seed_mean(key, "track1", "indep", "weighted_f1") is None:
             continue
         spec.append((name, lambda t, m, k=key: seed_mean(k, t, "indep", m)))
-        spec.append(("\\quad + joint decoding", lambda t, m, k=key: seed_mean(k, t, "joint", m)))
+        spec.append((S["joint_row"], lambda t, m, k=key: seed_mean(k, t, "joint", m)))
     if ens("mdeberta-xnli", "track1", "indep", "weighted_f1") is not None:
-        spec.append(("mDeBERTa-NLI 3-seed ens.", lambda t, m: ens("mdeberta-xnli", t, "indep", m)))
-        spec.append(("\\quad + joint decoding", lambda t, m: ens("mdeberta-xnli", t, "joint", m)))
+        spec.append((S["ens"], lambda t, m: ens("mdeberta-xnli", t, "indep", m)))
+        spec.append((S["joint_row"], lambda t, m: ens("mdeberta-xnli", t, "joint", m)))
     diag_idx = len(spec)
     spec.append(("\\textit{mDeBERTa + struct (O2)}", lambda t, m: seed_mean("mdeberta", t, "struct", m)))
 
@@ -94,23 +159,21 @@ def main_table() -> str:
         "\\resizebox{\\textwidth}{!}{%",
         "\\begin{tabular}{l" + "ccc" * (len(TRACKS) + 1) + "}",
         "\\toprule",
-        " & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{n}}}" for n in ["EN", "ES", "EU", "Mixed", "Average"]) + " \\\\",
+        " & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{n}}}" for n in track_names(with_avg=True)) + " \\\\",
         " ".join(f"\\cmidrule(lr){{{2 + 3 * i}-{4 + 3 * i}}}" for i in range(len(TRACKS) + 1)),
-        "System & " + " & ".join(["F1", "Soft", "Hard"] * (len(TRACKS) + 1)) + " \\\\",
+        S["system"] + " & " + " & ".join(["F1", "Soft", "Hard"] * (len(TRACKS) + 1)) + " \\\\",
         "\\midrule",
     ]
     for i, (name, txt) in enumerate(rows):
         if i in (2, diag_idx) or (i > 2 and name.startswith(("XLM", "mDeBERTa"))):
             lines.append("\\midrule")
         if i == diag_idx:
-            txt = [f"\\textit{{{t}}}" for t in txt]
+            txt = [f"\\textit{{{x}}}" for x in txt]
         lines.append(f"{name} & " + " & ".join(txt) + " \\\\")
     lines += [
         "\\bottomrule",
         "\\end{tabular}}",
-        "\\caption{Dev results (\\%). Learned systems: mean over 3 seeds (std.\\ in Appendix~\\ref{app:std}). "
-        "\\emph{joint}: joint bidirectional decoding (Eq.~\\ref{eq:joint}). Bold: best non-diagnostic value. "
-        "The last row exploits observation O2 and is shown as a diagnostic only.}",
+        f"\\caption{{{S['cap_main']}}}",
         "\\label{tab:main}",
         "\\end{table*}",
     ]
@@ -118,14 +181,14 @@ def main_table() -> str:
 
 
 def error_table() -> str:
-    cats = [("correct", "OK"), ("neg", "\\NO"), ("inconsistent", "Inc."), ("consistent_wrong", "Wrong")]
+    cats = [("correct", S["ok"]), ("neg", "\\NO"), ("inconsistent", S["inc"]), ("consistent_wrong", S["wrong"])]
     lines = [
         "\\begin{table}[t]",
         "\\centering\\small",
         "\\setlength{\\tabcolsep}{2.5pt}",
         "\\begin{tabular}{@{}llccccc@{}}",
         "\\toprule",
-        "Model & Dec. & " + " & ".join(c[1] for c in cats) + " & F1\\textsubscript{\\NO} \\\\",
+        f"Model & {S['dec']} & " + " & ".join(c[1] for c in cats) + " & F1\\textsubscript{\\NO} \\\\",
         "\\midrule",
     ]
     for key, name in [("xlmr", "XLM-R"), ("mdeberta", "mDeBERTa")]:
@@ -134,12 +197,11 @@ def error_table() -> str:
             for c in [c[0] for c in cats] + ["neg_f1"]:
                 v = [ANALYSIS.get(f"{key}_{t}", {}).get(mode, {}).get(c) for t in TRACKS]
                 vals.append(float(np.mean(v)) if all(x is not None for x in v) else None)
-            lines.append(f"{name if mode == 'indep' else ''} & {mode} & " + " & ".join(cells(vals)) + " \\\\")
+            lines.append(f"{name if mode == 'indep' else ''} & {S[mode]} & " + " & ".join(cells(vals)) + " \\\\")
     lines += [
         "\\bottomrule",
         "\\end{tabular}",
-        "\\caption{Outcome of gold reversible pairs (\\% of pairs, dev, mean over tracks and seeds): both correct (OK), "
-        "a direction predicted \\NO, inconsistent (Inc.), or consistent but wrong. F1\\textsubscript{\\NO}: instance-level F1 of \\NO.}",
+        f"\\caption{{{S['cap_err']}}}",
         "\\label{tab:errors}",
         "\\end{table}",
     ]
@@ -148,7 +210,7 @@ def error_table() -> str:
 
 def transfer_table() -> str | None:
     """E5: in-track training vs EN-only (zero-shot) vs pooled multilingual training (joint decoding)."""
-    systems = [("mdeberta", "In-track"), ("mdeberta-en2all", "EN only"), ("mdeberta-pooled", "Pooled")]
+    systems = [("mdeberta", S["in_track"]), ("mdeberta-en2all", S["en_only"]), ("mdeberta-pooled", S["pooled"])]
     if all(seed_mean(k, "track2", "joint", "weighted_f1") is None for k, _ in systems[1:]):
         return None
     lines = [
@@ -157,7 +219,7 @@ def transfer_table() -> str | None:
         "\\setlength{\\tabcolsep}{4pt}",
         "\\begin{tabular}{@{}lcccc@{}}",
         "\\toprule",
-        "Training data & EN & ES & EU & Mixed \\\\",
+        f"{S['train_data']} & " + " & ".join(track_names(with_avg=False)) + " \\\\",
         "\\midrule",
     ]
     for key, name in systems:
@@ -168,8 +230,7 @@ def transfer_table() -> str | None:
     lines += [
         "\\bottomrule",
         "\\end{tabular}",
-        "\\caption{Dev HardCons (\\%) of mDeBERTa with joint decoding (3 seeds) by training data: the track's own (in-track), "
-        "Track~1 only (zero-shot on the others), or all four tracks (pooled).}",
+        f"\\caption{{{S['cap_transfer']}}}",
         "\\label{tab:transfer}",
         "\\end{table}",
     ]
@@ -184,8 +245,8 @@ def std_table() -> str:
         "\\resizebox{\\textwidth}{!}{%",
         "\\begin{tabular}{ll" + "ccc" * len(TRACKS) + "}",
         "\\toprule",
-        " & & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{n}}}" for n in ["EN", "ES", "EU", "Mixed"]) + " \\\\",
-        "Model & Dec. & " + " & ".join(["F1", "Soft", "Hard"] * len(TRACKS)) + " \\\\",
+        " & & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{n}}}" for n in track_names(with_avg=False)) + " \\\\",
+        f"Model & {S['dec']} & " + " & ".join(["F1", "Soft", "Hard"] * len(TRACKS)) + " \\\\",
         "\\midrule",
     ]
     for key, name in [("xlmr", "XLM-R"), ("mdeberta", "mDeBERTa"), ("mdeberta-xnli", "mDeBERTa-NLI"), ("mdeberta-cons", "mDeBERTa+$\\mathcal{L}_\\text{cons}$")]:
@@ -197,11 +258,11 @@ def std_table() -> str:
                 for m in METRICS:
                     r = seed_mean(key, t, mode, m, std=True)
                     txt.append(f"{100 * r[0]:.1f}$\\pm${100 * r[1]:.1f}" if r else "--")
-            lines.append(f"{name if mode == 'indep' else ''} & {mode} & " + " & ".join(txt) + " \\\\")
+            lines.append(f"{name if mode == 'indep' else ''} & {S[mode]} & " + " & ".join(txt) + " \\\\")
     lines += [
         "\\bottomrule",
         "\\end{tabular}}",
-        "\\caption{Dev results (\\%), mean $\\pm$ standard deviation over three seeds.}",
+        f"\\caption{{{S['cap_std']}}}",
         "\\label{tab:std}",
         "\\end{table*}",
     ]
@@ -209,13 +270,19 @@ def std_table() -> str:
 
 
 def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "main.tex").write_text(main_table() + "\n")
-    (OUT / "errors.tex").write_text(error_table() + "\n")
-    (OUT / "std.tex").write_text(std_table() + "\n")
+    global S
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--lang", choices=sorted(STRINGS), default="en")
+    lang = ap.parse_args().lang
+    S = STRINGS[lang]
+    out = ROOT / "report" / ("tables" if lang == "en" else f"tables_{lang}")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "main.tex").write_text(main_table() + "\n")
+    (out / "errors.tex").write_text(error_table() + "\n")
+    (out / "std.tex").write_text(std_table() + "\n")
     tr = transfer_table()
-    (OUT / "transfer.tex").write_text((tr or "% transfer experiments not finished yet") + "\n")
-    print("wrote", ", ".join(p.name for p in OUT.glob("*.tex")))
+    (out / "transfer.tex").write_text((tr or "% transfer experiments not finished yet") + "\n")
+    print("wrote", out.relative_to(ROOT), ":", ", ".join(sorted(p.name for p in out.glob("*.tex"))))
 
 
 if __name__ == "__main__":

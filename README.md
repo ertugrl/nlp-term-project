@@ -21,7 +21,7 @@ construction. Also: a symmetric-KL consistency loss, and cross-lingual transfer 
 | `src/analysis.py` | Pair-level error decomposition, NEGATIVE_OTHER detection, per-language scores |
 | `src/make_tables.py` | `results/summary.md` (mean ± std over seeds) |
 | `scripts/` | Experiment drivers (`run_main.sh`, `run_extra.sh`) |
-| `report/` | ACL-format LaTeX report (`main.tex`, build with `tectonic -X compile main.tex --outdir build`) |
+| `report/` | ACL-format LaTeX report: English `main.tex` (submitted) and Turkish `main_tr.tex` (reference copy, tables via `make_latex.py --lang tr`); build with `tectonic -X compile <file> --outdir build` |
 
 ## Reproduce
 

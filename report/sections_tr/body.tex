@@ -1,0 +1,56 @@
+\section{Giriş}
+
+Doğal mantık, iki ifade arasında \emph{ileri gerektirme} ($a \sqsubset b$), \emph{geri gerektirme} ($a \sqsupset b$) ve \emph{eşdeğerlik} ilişkilerini ayırt eder \citep{maccartney2009natural}. Bu ilişkiler belirlenimci bir tersine çevirme cebirine uyar: öncül ile hipotezin yer değiştirmesi \FE$\leftrightarrow$\BE dönüşümünü yapar ve \EQ'yu değiştirmez. DiCo-NLI (SemEval-2027 Görev~2) bu cebiri bir değerlendirme hedefine dönüştürür. Her tersinir ifade çifti iki yönde de sınıflandırılır ve sistemler ağırlıklı F1'in yanında çift düzeyinde iki metrikle puanlanır: \emph{SoftCons} (iki tahmin tersine çevirme altında uyumlu mu?) ve \emph{HardCons} (ikisi de doğru mu?). Görev İngilizce, İspanyolca, Baskça ve karma dilli bir track içerir. İngilizce veri üzerindeki pilot çalışma, ince ayarlı kodlayıcıların bile çiftlerin \%16--20'sinde, yalnızca kod çözücü modellerin ise çok daha fazlasında tutarsız olduğunu bulmuştur \citep{apaolaza2026assessing}. Bu bulgu, özbağlanımlı dil modellerindeki tersine çevirme lanetini (reversal curse) hatırlatır \citep{berglund2024reversal}.
+
+Bir sınıflandırıcının tersine çevirme cebirini kendiliğinden içselleştirmesini ummak yerine, değerlendirme verisinin her tersinir çiftin \emph{iki} yönünü de içerdiğini gözlemliyor ve bu yönleri \emph{ortak} olarak çözümlüyoruz. İki yönlü sonsal dağılımlar üzerinde, tersine çevirme eşlemesiyle birbirine bağlanmış bir uzmanlar çarpımı \citep{hinton2002training}, tasarım gereği tutarlı tahminler üretir. Bu yöntem ek eğitim gerektirmez ve aynı ilişkiye iki farklı açıdan bakan kanıtları birleştirir.
+
+Katkılarımız şunlardır:
+(i) dört track'in tamamında çok dilli kodlayıcı çalışması (XLM-R, mDeBERTa ve NLI ön eğitimli mDeBERTa; kendi verisiyle, sıfır-örnek ve birleşik eğitim);
+(ii) \emph{ortak çift yönlü çözümleme}: HardCons'u eğitim maliyeti olmadan 72 değerlendirmenin tamamında artırır (ortalama +3.9 puan) ve eğitim sırasında uygulanan bir tutarlılık kaybından daha etkilidir;
+(iii) ince ayarlı kodlayıcılarda yön tutarsızlığının küçük, \NO kararının ise asıl hata kaynağı olduğunu gösteren bir hata analizi;
+(iv) iki veri kümesi gözlemi: SoftCons girdiden bağımsız sabit bir tahminciyle en yüksek değerine ulaşır ve \NO örnekleri yalnızca çift yapısından tanınabilir.
+
+\section{Görev ve Veri}
+\label{sec:task}
+
+\paragraph{Etiketler ve track'ler.} Her örnek, \EQ, \FE, \BE ya da \NO (benzerlik veya karşıtlık gibi diğer tüm PhrasIS ilişkileri) olarak etiketlenmiş sıralı bir ifade çiftidir $(a,b)$. $\Rev(\EQ)=\EQ$, $\Rev(\FE)=\BE$ ve $\Rev(\BE)=\FE$'dir; \NO'nun tersi yoktur ve yalnızca F1'de kullanılır. Veri, görüntü altyazıları ve haber başlıklarından oluşturulmuş PhrasIS'in \citep{lopezgazpio2024phrasis} tersinir alt kümesinden türetilmiştir. İspanyolca ve Baskça sürümler makine çevirisiyle üretilmiş ve iki dilli uzmanlarca doğrulanmıştır. Bölünmeler kaynak çift düzeyinde yapılmıştır; hiçbir kaynak çift birden fazla bölünmede yer almaz. Track 1--3 tek dillidir (her biri 3{,}042 eğitim / 660 dev örneği). Track~4 dilleri karıştırır: her kaynak çift altı sıralı diller arası kombinasyonun hepsinde yer alır (en-es, es-en, \dots; 18{,}252 / 3{,}960 örnek). Bir en-es örneğinin tersi, ifadelerin yer değiştirdiği bir es-en örneğidir.
+
+\paragraph{Metrikler.} $\mathcal{P}$ tersinir çiftler $(x, \bar{x})$ kümesi, $f$ de sistem olsun. Bu durumda
+$\text{SoftCons} = \frac{1}{|\mathcal{P}|}\sum \mathbb{I}[f(x)\neq\NO \wedge f(\bar{x})=\Rev(f(x))]$ ve
+$\text{HardCons} = \frac{1}{|\mathcal{P}|}\sum \mathbb{I}[f(x)=y \wedge f(\bar{x})=\bar{y}]$ olur; burada $y$ ve $\bar{y}$ altın etiketlerdir.
+SoftCons altın etiketleri dikkate almaz, HardCons ise eşli doğruluktur.
+
+\paragraph{İki gözlem.} Açık veriyi incelediğimizde, sistem tasarımı ve skorların yorumlanması açısından önemli iki özellik ortaya çıkıyor.
+\textbf{(O1)} SoftCons altın etiketten bağımsız olduğu için, her zaman \EQ tahmin eden ve girdiye hiç bakmayan bir sistem SoftCons $=\%100$ alır (Tablo~\ref{tab:main}). Bu nedenle SoftCons ancak F1 ve HardCons ile birlikte anlamlıdır.
+\textbf{(O2)} Hem eğitim hem dev kümesinde her tersinir örnek iki yönde, her \NO örneği ise tam olarak tek yönde bulunur. Katılımcıya görünen alanlardan hesaplanabilen tersine çevirme grubunun büyüklüğü, \NO'yu \%100 kesinlik ve duyarlılıkla belirler. Test kümesi bu özelliği korursa, yapıyı bilen bir çözümleyici bundan yararlanabilir. Böyle bir çözümleyiciyi ayrı bir tanı satırı olarak (\textit{struct}) raporluyor, ana sistemimizde kullanmıyoruz.
+
+\section{İlgili Çalışmalar}
+
+\paragraph{Mantıksal tutarlılık.} Tutarlılık kısıtları NLI modellerine çekişmeli düzenlileştirme \citep{minervini2018adversarially} ve simetri ile geçişlilik için mantıktan türetilmiş eğitim kayıpları \citep{li2019logic} yoluyla eklenmiştir. Benzer fikirler soru yanıtlamaya da uygulanmıştır \citep{asai2020logic}. Tutarlılık kıyaslama kümeleri arasında BECEL \citep{jang2022becel} vardır; \citet{wu2025transitive} ise geçişli öz-tutarlılığı altın etiket olmadan değerlendirir. Bu çalışmalar tutarlılığı çoğunlukla eğitim sırasında zorlar; biz ise onu çıkarım anında kesin olarak zorluyor ve iki yaklaşımı karşılaştırıyoruz.
+\paragraph{Tersine çevirme laneti.} ``A, B'dir'' biçiminde eğitilen özbağlanımlı dil modelleri ``B, A'dır'' çıkarımını yapamaz \citep{berglund2024reversal,lin2024delving}; bu durum ters yönlü eğitimi motive etmiştir \citep{golovneva2024reverse}. DiCo-NLI bu çalışmalardan esinlenir, ancak parametrik olgu hatırlamayı değil, ifadeler üzerindeki ilişkisel çıkarımı sınar.
+\paragraph{Artefaktlar.} NLI verilerinin etiketleme artefaktları \citep{gururangan2018annotation}, çevrilmiş değerlendirme verilerinin ise çeviri artefaktları \citep{artetxe2020translation} içerdiği bilinmektedir. O2 gözlemi de aynı türden yapısal bir artefakttır.
+
+\section{Sistem}
+\label{sec:method}
+
+\paragraph{Yön duyarlı sınıflandırıcı.} Bir kodlayıcı çifti \texttt{[CLS]}\,$a$\,\texttt{[SEP]}\,$b$ olarak okur ve doğrusal bir katman dört etiket üzerinde $p_\theta(y \mid a,b)$ dağılımını verir. Her tersinir çiftin iki yönünü zaten içeren tüm eğitim örnekleri üzerinde çapraz entropiyle eğitiyoruz. XLM-R\textsubscript{base} \citep{conneau2020unsupervised}, mDeBERTa-v3\textsubscript{base} \citep{he2023debertav3} ve çok dilli NLI verisiyle \citep[XNLI ve makine çevirisiyle çoğaltılmış İngilizce NLI derlemleri;][]{conneau2018xnli,laurer2024less} ince ayar yapılmış bir mDeBERTa-v3\textsubscript{base} modelini karşılaştırıyoruz. Sonuncusu, cümle düzeyindeki NLI'dan ara görev aktarımını sınar; 3 sınıflı çıktı katmanı yeni bir 4 sınıflı katmanla değiştirilir.
+
+\paragraph{Ortak çift yönlü çözümleme.} Test sırasında örnekleri yalnızca katılımcıya görünen alanlarla tersine çevirme gruplarına ayırıyoruz: aynı \texttt{pair\_id} ve yer değiştirmiş iki (dil, ifade) yuvası. Bir $\{(a,b),(b,a)\}$ grubu için
+\begin{equation}
+y^\star = \operatorname*{arg\,max}_{y}\, \log p(y|a,b) + \log p(\Rev(y)|b,a)
+\label{eq:joint}
+\end{equation}
+seçilir ($\Rev(\NO)=\NO$); $(a,b)$ için $y^\star$, $(b,a)$ için $\Rev(y^\star)$ çıktısı verilir. Tek yönlü gruplarda doğrudan argmax kullanılır. Denk.~\ref{eq:joint}, aynı ilişkiyi zıt taraflardan gören iki uzmanın çarpımıdır. Bu yöntem (i) ortak olarak \NO etiketlenmeyen her çiftte SoftCons $=1$'i garanti eder, (ii) daha emin olan yönün kanıtı diğerini düzeltebildiği için test anı veri artırımı gibi çalışır ve (iii) modelden bağımsızdır, yeniden eğitim gerektirmez. Tanı amaçlı \textit{struct} varyantı ayrıca tüm tek yönlü gruplara \NO atar ve \NO'yu Denk.~\ref{eq:joint}'in dışında tutar (O2).
+
+\paragraph{Tutarlılıkla düzenlileştirilmiş eğitim.} Eğitim tarafındaki karşılık olarak, \citet{li2019logic} yaklaşımına benzer biçimde $p_\theta(\cdot\mid a,b)$ ile ters çevrilmiş dağılım $\Rev\circ p_\theta(\cdot\mid b,a)$ arasına simetrik bir KL terimi ekliyoruz: $\mathcal{L} = \mathcal{L}_{\text{CE}} + \lambda\,\tfrac{1}{2}\big[\mathrm{KL}(p_{ab}\Vert \Rev\,p_{ba}) + \mathrm{KL}(\Rev\,p_{ba}\Vert p_{ab})\big]$. Bir çiftin iki yönü her zaman aynı mini yığına konur. Böylece eğitimde öğrenilen ve çözümlemede zorlanan tutarlılığı karşılaştırabiliyoruz.
+
+\paragraph{Diller arası aktarım.} Her track için ayrı bir modelin (\emph{kendi verisi}) yanında, yalnızca İngilizceyle eğitip modeli diğer track'lere sıfır-örnek uyguluyoruz (\emph{yalnız EN}) ve dört eğitim kümesinin birleşimi üzerinde tek bir model eğitiyoruz (\emph{birleşik}).
+
+\input{sections_tr/experiments}
+
+\section{Sonuç}
+
+DiCo-NLI'daki yön tutarlılığını bir çözümleme problemi olarak ele aldık. Bir çiftin iki yönünü puanlayıp tersine çevirme eşlemesi altında ortak olarak çözümlemek maliyetsizdir ve modelden bağımsızdır. Bu yöntem eşli doğruluğu her değerlendirmede artırdı ve tutarlılığı bir eğitim kaybıyla öğretmekten daha etkili oldu. Analizimiz, yönler birbirine bağlandıktan sonra geriye kalan zorluğun \emph{tersinir olmayan} ilişkileri tanımak olduğunu gösteriyor. Bu karar açık veride çift yapısıyla atlanabildiğinden, resmi test verisinin bu yapıyı gizlemesini öneriyoruz (örneğin \NO örneklerini de iki yönde sunarak).
+
+\section*{Sınırlılıklar}
+Resmi test kümesi henüz yayımlanmadığı için tüm sayılar açık dev kümesi üzerindedir; model seçimi eğitim verisinden ayrılmış bir dilimle yapılmıştır. Ortak çözümleme, tersinir bir çiftin iki yönünün de değerlendirme verisinde bulunduğunu varsayar; bu DiCo-NLI'da tasarım gereği geçerlidir, ancak tek yönlü NLI'da geçerli değildir. İspanyolca ve Baskça veriler çeviri olduğundan, çeviri artefaktları diller arası sonuçları şişirebilir. Hesaplama kısıtları nedeniyle (tek bir dizüstü GPU) kelime gömmeleri dondurulmuş temel boyutlu kodlayıcılar ve yapılandırma başına üç tohum kullandık.

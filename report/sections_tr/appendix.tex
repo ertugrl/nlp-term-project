@@ -1,0 +1,17 @@
+\section{Tohumlar Arası Değişkenlik}
+\label{app:std}
+
+\input{tables_tr/std}
+
+\section{Hiperparametreler ve Uygulama}
+\label{app:hparams}
+
+\begin{itemize}\itemsep0pt
+\item Modeller (Hugging Face): \texttt{FacebookAI/xlm-roberta-base}, \texttt{microsoft/mdeberta-v3-base} ve \texttt{MoritzLaurer/mDeBERTa-v3-base-xnli-}\allowbreak\texttt{multilingual-nli-2mil7}.
+\item Öğrenme oranı (EN doğrulama diliminde $\{2,5\}\cdot10^{-5}$ arasından seçildi): XLM-R $2\cdot10^{-5}$, mDeBERTa $5\cdot10^{-5}$, mDeBERTa-NLI $5\cdot10^{-5}$.
+\item Epoch: en fazla 10 (tek dilli, yalnız EN) ya da 4 (karma, birleşik); en iyi epoch, ayrı çözümlemeyle doğrulama ağırlıklı F1'ine göre seçilir.
+\item Optimizasyon: AdamW, 32'lik yığın (bir çiftin iki yönü her zaman aynı yığında), \%10 doğrusal ısınma ve ardından doğrusal azalma, 0.01 ağırlık azaltımı, 1.0 gradyan kırpma, en fazla 64 token. Kelime gömmeleri dondurulmuştur (250 bin tokenlik sözlükler).
+\item Tutarlılık kaybı ağırlığı $\lambda=1$ (ayarlanmadı).
+\item Tohumlar 1, 2, 3; tohum toplulukları tahmin edilen olasılıkların ortalamasını alır.
+\item Doğrulama dilimi: \texttt{pair\_id}'nin MD5 özeti en düşük \%10'a düşen kaynak çiftler (1{,}760 eğitim kaynak çiftinden 175'i).
+\end{itemize}
