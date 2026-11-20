@@ -3,6 +3,8 @@
 
 The official test set will only be released in January 2027, so we use the public dev split as our test set and never use it for model selection. Instead, we hold out 10\% of the \emph{training} source pairs as a validation slice (the same pairs in every track, so there is no cross-lingual leakage). On this slice we select the learning rate from $\{2,5\}\cdot10^{-5}$ (on EN) and the best epoch (out of 10 for monolingual and 4 for mixed training). Selection always uses independent decoding, so it is blind to the decoder. We use AdamW, batch size 32 and 10\% warm-up, and we freeze the word embeddings to fit into 18\,GB of laptop memory (Appendix~\ref{app:hparams}). Every configuration is run with three seeds (3.5--6 minutes per monolingual run on an Apple M3 Pro). All scores come from the official scorer.
 
+\paragraph{Resources.} We use only open encoder checkpoints and the official training data.\footnote{\url{https://inigolopezgazpio.net/SemEval-2027-Task-2-DiCo-NLI/}} The only external data are the NLI corpora behind the mDeBERTa-NLI checkpoint (XNLI and translated English NLI). PhrasIS is not used.
+
 \section{Results}
 \label{sec:results}
 
@@ -18,35 +20,34 @@ The official test set will only be released in January 2027, so we use the publi
 
 \input{tables/errors}
 
-\paragraph{Where do errors come from?} Table~\ref{tab:errors} decomposes the outcome of every gold reversible pair. For mDeBERTa, only 2.5\% of pairs are directionally inconsistent, and the dominant failure is predicting \NO for a reversible pair (13.2\%). The \NO class reaches only 54 F1. Joint decoding removes all inconsistencies and also repairs some spurious \NO predictions (13.2$\rightarrow$11.3\%), because a confident direction overrides the other one. A minority of formerly inconsistent pairs become consistently wrong (7.1$\rightarrow$8.5\%). The diagnostic \emph{struct} row in Table~\ref{tab:main} quantifies how much the \NO decision matters. Using the pair structure (O2) instead of the model to detect \NO raises average F1 from 76.7 to 89.5. On public data, the hardest part of the task is therefore deciding \emph{whether} a relation is reversible, not \emph{in which direction} it holds. Unless the test data hides this structure, it is also the easiest part to shortcut.
+\paragraph{Where do errors come from?} Table~\ref{tab:errors} decomposes the outcome of every gold reversible pair. For mDeBERTa, only 2.5\% of pairs are directionally inconsistent, and the dominant failure is predicting \NO for a reversible pair (13.2\%). The \NO class reaches only 54 F1. Joint decoding removes all inconsistencies and also repairs some spurious \NO predictions (13.2$\rightarrow$11.3\%), because a confident direction overrides the other one. The diagnostic \emph{struct} row in Table~\ref{tab:main} quantifies how much the \NO decision matters. Using the pair structure (O2) instead of the model to detect \NO raises average F1 from 76.7 to 89.5. On public data, the hardest part of the task is therefore deciding \emph{whether} a relation is reversible, not \emph{in which direction} it holds. Unless the test data hides this structure, it is also the easiest part to shortcut.
 
 \input{tables/transfer}
 
-\paragraph{Cross-lingual transfer.} A model trained on English only transfers almost perfectly to Spanish: 80.7 HardCons, compared with 81.1 for in-track training (Table~\ref{tab:transfer}). It loses 10 points on Basque and 22 points on the mixed track, so cross-lingual pairs require cross-lingual supervision. Pooling all four training sets is the best single-model setting (81.9 average HardCons vs.\ 80.2 in-track), with the largest gains on Basque ($+2.7$) and Spanish ($+2.5$). Joint decoding helps most in the zero-shot setting ($+4.0$ HardCons).
+\paragraph{Cross-lingual transfer.} A model trained on English only keeps its HardCons on Spanish (80.7 vs.\ 81.1 in-track; Table~\ref{tab:transfer}) but loses 3.5 F1 points. It predicts \NO less often (recall 43 vs.\ 59\%), which costs F1 on the \NO items but spares the reversible pairs. On Basque and on the mixed track it loses 10 and 22 HardCons points, so cross-lingual pairs require cross-lingual supervision. Pooling all four training sets is the best single-model setting (81.9 average HardCons vs.\ 80.2 in-track), with the largest gains on Basque ($+2.7$) and Spanish ($+2.5$).
 
 \section{Work Plan and Task Division}
 \label{sec:plan}
 
-All components of Section~\ref{sec:method} are implemented and evaluated. Until the final report (28 December) we plan to:
-(i) combine the two best ingredients, NLI pretraining and pooled multilingual training;
-(ii) attack the main error source, \NO detection, through calibration of the \NO logit on the validation slice and a larger encoder (XLM-R\textsubscript{large});
-(iii) carry out a qualitative error analysis by phrase type and translation quality;
-(iv) optionally, compare with zero/few-shot LLMs to connect our results to the reversal-curse literature.
-Table~\ref{tab:plan} lists the responsibilities.
+All components of Section~\ref{sec:method} are implemented. For the final report (28 Dec) we plan to:
+(i) combine NLI pretraining and pooled training in a 3-seed ensemble, and score the swapped input of \emph{every} instance with the model itself, so that joint decoding no longer needs the reverse in the file;
+(ii) calibrate the \NO logit on the validation slice and add reversed \NO training items (also \NO) with loss weight 0.5;
+(iii) tune $\lambda\in\{0.1, 0.3, 1\}$;
+(iv) qualitative error analysis; optionally, a small open LLM (zero-shot, independent vs.\ joint decoding).
 
 \begin{table}[h]
 \centering\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}ll@{}}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lp{0.74\columnwidth}@{}}
 \toprule
-Responsibility & Member \\
+Member & Code / analysis; plan item; sections written \\
 \midrule
-Lead, experiments, writing & Ertu\u{g}rul \c{S}ahin \\
-Evaluation, peer review & Metin Ertekin K\"{u}\c{c}\"{u}k \\
-Modelling, consistency & Bekir Okudurlar \\
-Data, cross-lingual analysis & Mungunsarnai Tumurkhuu \\
+K\"{u}\c{c}\"{u}k & Scorer integration, baselines, error analysis (Tab.~\ref{tab:errors}); (iv); \S1, \S6 \\
+\c{S}ahin & Training pipeline, joint decoding, experiment runs; (i); \S4, \S5, \S7, \S8 \\
+Okudurlar & Encoders, NLI transfer, consistency loss; (iii); \S3, \S6 \\
+Tumurkhuu & Data artifacts (O1/O2), cross-lingual transfer (Tab.~\ref{tab:transfer}); (ii); \S2, \S6 \\
 \bottomrule
 \end{tabular}
-\caption{Responsibilities. Modelling: encoders, NLI transfer, joint decoding, consistency loss. Data: artifacts, baselines, transfer, \NO analysis. Timeline: peer reviews 30 Nov; extensions 1--14 Dec; final report 28 Dec.}
+\caption{Task division (all members review the full draft).}
 \label{tab:plan}
 \end{table}

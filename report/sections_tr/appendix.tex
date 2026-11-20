@@ -1,7 +1,16 @@
 \section{Tohumlar Arası Değişkenlik}
 \label{app:std}
 
+Tablo~\ref{tab:std}, Tablo~\ref{tab:main}'deki her öğrenen sistem için üç tohum üzerinden ortalama $\pm$ standart sapmayı verir. mDeBERTa varyantlarında standart sapma en fazla 2.3 puandır (medyan yaklaşık 1); bu, ortak çözümlemenin ortalama HardCons kazancının ($+3.0$) altındadır. XLM-R çok daha kararsızdır (16 puana kadar); bunun başlıca nedeni çöken İspanyolca tohumudur.
+
 \input{tables_tr/std}
+
+\section{Diller Arası Aktarımın Tüm Sonuçları}
+\label{app:transfer}
+
+Tablo~\ref{tab:transfer_full}, Tablo~\ref{tab:transfer}'ü SoftCons, ayrı çözümleme ve standart sapmalarla genişletir. Ortak çözümleme HardCons'u her eğitim ayarında ve her track'te artırır; en büyük artış sıfır-örnek ayarındadır.
+
+\input{tables_tr/transfer_full}
 
 \section{Hiperparametreler ve Uygulama}
 \label{app:hparams}

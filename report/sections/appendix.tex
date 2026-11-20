@@ -1,7 +1,16 @@
 \section{Per-seed Variability}
 \label{app:std}
 
+Table~\ref{tab:std} reports mean $\pm$ standard deviation over the three seeds for every learned system of Table~\ref{tab:main}. For the mDeBERTa variants the standard deviation is at most 2.3 points (median about 1), below the average HardCons gain of joint decoding ($+3.0$). XLM-R is far less stable (up to 16 points), mainly because of the collapsed Spanish seed.
+
 \input{tables/std}
+
+\section{Full Cross-lingual Transfer Results}
+\label{app:transfer}
+
+Table~\ref{tab:transfer_full} extends Table~\ref{tab:transfer} with SoftCons, independent decoding and standard deviations. Joint decoding raises HardCons in every training setting and track, most of all in the zero-shot setting.
+
+\input{tables/transfer_full}
 
 \section{Hyperparameters and Implementation}
 \label{app:hparams}

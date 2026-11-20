@@ -76,30 +76,47 @@ def groups_of(rows: list[dict]) -> list[list[int]]:
     return list(groups.values())
 
 
+def input_key(row: dict) -> tuple:
+    """The model input of a row: ordered ((lang, text1), (lang, text2)). No ids are involved."""
+    return ((row["text1_lang"], row["text1"]), (row["text2_lang"], row["text2"]))
+
+
+def swapped_rows(rows: list[dict]) -> list[list[int]]:
+    """For every row (a, b), the rows whose input is exactly (b, a), found from the texts alone.
+
+    Neither pair_id nor any other id is used, so decoding does not depend on how the evaluation file
+    groups its items. A row may have several matches when the same phrase pair occurs under more than
+    one source pair; a row with a == b matches itself (its swapped input is the row itself).
+    """
+    by_input: dict[tuple, list[int]] = defaultdict(list)
+    for i, r in enumerate(rows):
+        by_input[input_key(r)].append(i)
+    return [by_input.get((k[1], k[0]), []) for k in map(input_key, rows)]
+
+
 def decode(rows: list[dict], logp: np.ndarray, mode: str) -> dict[str, str]:
-    """Turn per-instance log-probabilities into labels.
+    """Turn per-instance log-probabilities into labels, one row at a time.
 
     indep  : argmax per instance.
-    joint  : for each two-direction group, argmax_y logp(y|a,b) + logp(Rev(y)|b,a); both directions
-             receive y* and Rev(y*). NEGATIVE_OTHER stays a joint option (both directions NEG).
-    struct : artifact-exploiting variant: one-direction groups -> NEGATIVE_OTHER, two-direction
-             groups -> joint decoding restricted to the reversible labels.
+    joint  : self-swap decoding. If the swapped input (b, a) of row (a, b) has been scored (i.e. it is
+             in the evaluation file), choose argmax_y logp(y|a,b) + logp(Rev(y)|b,a) with Rev(NEG)=NEG;
+             otherwise fall back to the argmax. For the two rows of a reversible pair the objectives are
+             mirror images, so they receive y* and Rev(y*): consistent by construction.
+    struct : artifact-exploiting diagnostic (O2): rows without a swapped counterpart -> NEGATIVE_OTHER,
+             the others -> joint decoding restricted to the reversible labels.
     """
+    partners = swapped_rows(rows)
     preds: dict[str, str] = {}
-    for idxs in groups_of(rows):
-        if mode == "indep" or len(idxs) != 2:
-            for i in idxs:
-                k = NEG if (mode == "struct" and len(idxs) == 1) else int(np.argmax(logp[i]))
-                preds[rows[i]["instance_id"]] = LABELS[k]
-            continue
-        i, j = idxs
-        scores = logp[i] + logp[j][REV_PERM]
-        if mode == "struct":
-            scores = scores.copy()
-            scores[NEG] = -np.inf
-        k = int(np.argmax(scores))
-        preds[rows[i]["instance_id"]] = LABELS[k]
-        preds[rows[j]["instance_id"]] = LABELS[REV_PERM[k]]
+    for i, r in enumerate(rows):
+        rev = partners[i]
+        if mode == "indep" or not rev:
+            k = NEG if (mode == "struct" and not rev) else int(np.argmax(logp[i]))
+        else:
+            scores = logp[i] + logp[rev].mean(axis=0)[REV_PERM]
+            if mode == "struct":
+                scores[NEG] = -np.inf
+            k = int(np.argmax(scores))
+        preds[r["instance_id"]] = LABELS[k]
     return preds
 
 

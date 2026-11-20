@@ -39,13 +39,16 @@ STRINGS = {
         "in_track": "In-track",
         "en_only": "EN only",
         "pooled": "Pooled",
-        "cap_main": "Dev results (\\%). Learned systems: mean over 3 seeds (std.\\ in Appendix~\\ref{app:std}). "
-        "\\emph{joint}: joint bidirectional decoding (Eq.~\\ref{eq:joint}). Bold: best non-diagnostic value. "
+        "cap_main": "Dev results (\\%). Learned systems: mean over 3 seeds (std.\\ in Appendix~\\ref{app:std}); "
+        "the \\emph{3-seed ens.} rows are a single ensemble (averaged probabilities), not a mean. "
+        "\\emph{joint}: joint bidirectional decoding (Eq.~\\ref{eq:joint}). Bold: best learned (non-diagnostic) value. "
         "The last row exploits observation O2 and is shown as a diagnostic only.",
-        "cap_err": "Outcome of gold reversible pairs (\\% of pairs, dev, mean over tracks and seeds): both correct (OK), "
-        "a direction predicted \\NO, inconsistent (Inc.), or consistent but wrong. F1\\textsubscript{\\NO}: instance-level F1 of \\NO.",
-        "cap_transfer": "Dev HardCons (\\%) of mDeBERTa with joint decoding (3 seeds) by training data: the track's own (in-track), "
-        "Track~1 only (zero-shot on the others), or all four tracks (pooled).",
+        "cap_err": "Gold reversible pairs (\\%, dev, mean over tracks and seeds): both correct (OK), a direction predicted \\NO, "
+        "inconsistent (Inc.), consistent but wrong. F1\\textsubscript{\\NO}: instance-level F1.",
+        "cap_transfer": "Dev F1\\,/\\,HardCons (\\%) of mDeBERTa, joint decoding, 3 seeds. EN only is zero-shot on ES, EU, Mixed; "
+        "on EN it reruns the in-track configuration (gap: GPU non-determinism). Full: Table~\\ref{tab:transfer_full}.",
+        "cap_transfer_full": "Cross-lingual transfer of mDeBERTa on dev (\\%), mean $\\pm$ std.\\ over three seeds, "
+        "with independent and joint decoding. Training data as in Table~\\ref{tab:transfer}.",
         "cap_std": "Dev results (\\%), mean $\\pm$ standard deviation over three seeds.",
     },
     "tr": {
@@ -66,13 +69,16 @@ STRINGS = {
         "in_track": "Kendi verisi",
         "en_only": "Yalnız EN",
         "pooled": "Birleşik",
-        "cap_main": "Dev sonuçları (\\%). Öğrenen sistemler: 3 tohumun ortalaması (standart sapmalar Ek~\\ref{app:std}'de). "
-        "\\emph{ortak}: ortak çift yönlü çözümleme (Denk.~\\ref{eq:joint}). Kalın: tanı satırı dışındaki en iyi değer. "
-        "Son satır O2 gözlemini kullanır ve yalnızca tanı amacıyla verilmiştir.",
-        "cap_err": "Altın tersinir çiftlerin sonucu (çiftlerin \\%'si; dev, track ve tohum ortalaması): iki yön de doğru (Doğru), "
-        "bir yöne \\NO tahmin edilmiş, tutarsız (Tuts.) ya da tutarlı ama yanlış. F1\\textsubscript{\\NO}: \\NO sınıfının örnek düzeyindeki F1'i.",
-        "cap_transfer": "Ortak çözümlemeli mDeBERTa'nın eğitim verisine göre dev HardCons değeri (\\%, 3 tohum): track'in kendi verisi, "
-        "yalnızca Track~1 (diğerlerinde sıfır-örnek) ya da dört track'in birleşimi.",
+        "cap_main": "Dev sonuçları (\\%). Öğrenen sistemler: 3 tohumun ortalaması (standart sapmalar Ek~\\ref{app:std}'de); "
+        "\\emph{3 tohum topluluğu} satırları ortalama değil, tek bir topluluğun (olasılık ortalaması) sonucudur. "
+        "\\emph{ortak}: ortak çift yönlü çözümleme (Denk.~\\ref{eq:joint}). Kalın: en iyi öğrenen (tanı dışı) değer. "
+        "Son satır O2'yi kullanır; yalnızca tanı amaçlıdır.",
+        "cap_err": "Altın tersinir çiftler (\\%; dev, track ve tohum ortalaması): iki yön de doğru (Doğru), bir yöne \\NO, "
+        "tutarsız (Tuts.), tutarlı ama yanlış. F1\\textsubscript{\\NO}: örnek düzeyinde F1.",
+        "cap_transfer": "mDeBERTa, ortak çözümleme, 3 tohum: dev F1\\,/\\,HardCons (\\%). Yalnız EN, ES, EU ve Karma'da sıfır-örnektir; "
+        "EN'de kendi verisi yapılandırmasının tekrar koşusudur (fark: GPU deterministik değil). Tümü: Tablo~\\ref{tab:transfer_full}.",
+        "cap_transfer_full": "mDeBERTa'nın diller arası aktarımı (dev, \\%), üç tohum üzerinden ortalama $\\pm$ std., "
+        "ayrı ve ortak çözümlemeyle. Eğitim verileri Tablo~\\ref{tab:transfer}'teki gibidir.",
         "cap_std": "Dev sonuçları (\\%), üç tohum üzerinden ortalama $\\pm$ standart sapma.",
     },
 }
@@ -216,17 +222,18 @@ def transfer_table() -> str | None:
     lines = [
         "\\begin{table}[t]",
         "\\centering\\small",
-        "\\setlength{\\tabcolsep}{4pt}",
+        "\\setlength{\\tabcolsep}{2.5pt}",
         "\\begin{tabular}{@{}lcccc@{}}",
         "\\toprule",
         f"{S['train_data']} & " + " & ".join(track_names(with_avg=False)) + " \\\\",
         "\\midrule",
     ]
     for key, name in systems:
-        vals = [seed_mean(key, t, "joint", "hard_cons") for t in TRACKS]
-        if all(v is None for v in vals):
+        f1 = [seed_mean(key, t, "joint", "weighted_f1") for t in TRACKS]
+        hc = [seed_mean(key, t, "joint", "hard_cons") for t in TRACKS]
+        if all(v is None for v in hc):
             continue
-        lines.append(f"{name} & " + " & ".join(cells(vals)) + " \\\\")
+        lines.append(f"{name} & " + " & ".join(f"{a}\\,/\\,{b}" for a, b in zip(cells(f1), cells(hc))) + " \\\\")
     lines += [
         "\\bottomrule",
         "\\end{tabular}",
@@ -237,7 +244,11 @@ def transfer_table() -> str | None:
     return "\n".join(lines)
 
 
-def std_table() -> str:
+def std_table(models: list[tuple[str, str]] | None = None, caption: str = "cap_std", label: str = "tab:std",
+              head: str = "Model") -> str:
+    if models is None:
+        models = [("xlmr", "XLM-R"), ("mdeberta", "mDeBERTa"), ("mdeberta-xnli", "mDeBERTa-NLI"),
+                  ("mdeberta-cons", "mDeBERTa+$\\mathcal{L}_\\text{cons}$")]
     lines = [
         "\\begin{table*}[t]",
         "\\centering\\small",
@@ -246,10 +257,10 @@ def std_table() -> str:
         "\\begin{tabular}{ll" + "ccc" * len(TRACKS) + "}",
         "\\toprule",
         " & & " + " & ".join(f"\\multicolumn{{3}}{{c}}{{{n}}}" for n in track_names(with_avg=False)) + " \\\\",
-        f"Model & {S['dec']} & " + " & ".join(["F1", "Soft", "Hard"] * len(TRACKS)) + " \\\\",
+        f"{head} & {S['dec']} & " + " & ".join(["F1", "Soft", "Hard"] * len(TRACKS)) + " \\\\",
         "\\midrule",
     ]
-    for key, name in [("xlmr", "XLM-R"), ("mdeberta", "mDeBERTa"), ("mdeberta-xnli", "mDeBERTa-NLI"), ("mdeberta-cons", "mDeBERTa+$\\mathcal{L}_\\text{cons}$")]:
+    for key, name in models:
         if seed_mean(key, "track1", "indep", "weighted_f1") is None:
             continue
         for mode in ["indep", "joint"]:
@@ -262,8 +273,8 @@ def std_table() -> str:
     lines += [
         "\\bottomrule",
         "\\end{tabular}}",
-        f"\\caption{{{S['cap_std']}}}",
-        "\\label{tab:std}",
+        f"\\caption{{{S[caption]}}}",
+        f"\\label{{{label}}}",
         "\\end{table*}",
     ]
     return "\n".join(lines)
@@ -280,6 +291,9 @@ def main() -> None:
     (out / "main.tex").write_text(main_table() + "\n")
     (out / "errors.tex").write_text(error_table() + "\n")
     (out / "std.tex").write_text(std_table() + "\n")
+    (out / "transfer_full.tex").write_text(std_table(
+        [("mdeberta", S["in_track"]), ("mdeberta-en2all", S["en_only"]), ("mdeberta-pooled", S["pooled"])],
+        caption="cap_transfer_full", label="tab:transfer_full", head=S["train_data"]) + "\n")
     tr = transfer_table()
     (out / "transfer.tex").write_text((tr or "% transfer experiments not finished yet") + "\n")
     print("wrote", out.relative_to(ROOT), ":", ", ".join(sorted(p.name for p in out.glob("*.tex"))))

@@ -6,7 +6,9 @@ Task page: https://inigolopezgazpio.net/SemEval-2027-Task-2-DiCo-NLI/
 **Approach.** Fine-tune a multilingual encoder (XLM-R, mDeBERTa-v3, NLI-pretrained mDeBERTa) as a
 4-way directional classifier, then decode both directions of every reversible pair jointly:
 `y* = argmax_y log p(y|a,b) + log p(Rev(y)|b,a)`, which makes predictions consistent by
-construction. Also: a symmetric-KL consistency loss, and cross-lingual transfer experiments.
+construction. The reverse `(b,a)` of each instance is found from the phrases and their languages
+only (no `pair_id`); instances without one are decoded independently. Also: a symmetric-KL
+consistency loss, and cross-lingual transfer experiments.
 
 ## Layout
 
@@ -14,7 +16,7 @@ construction. Also: a symmetric-KL consistency loss, and cross-lingual transfer 
 |---|---|
 | `data/` | Official public train/dev CSVs (copied from the task repo) |
 | `third_party/dico-nli/evaluation_functions/` | Official scorer (GPL-3.0, see `LICENSE`, upstream commit in `UPSTREAM_COMMIT`) |
-| `src/dico/common.py` | Labels, reversal algebra, data loading, reversal grouping, decoders, official scoring |
+| `src/dico/common.py` | Labels, reversal algebra, data loading, reverse lookup, decoders, official scoring |
 | `src/train.py` | Fine-tuning; writes per-instance log-probs to `results/runs/<run>/` (no weights saved) |
 | `src/evaluate.py` | Decodes saved log-probs (`indep` / `joint` / `struct`), scores, seed-ensembles |
 | `src/baselines.py` | Majority / random / constant-EQ / structure-only baselines |

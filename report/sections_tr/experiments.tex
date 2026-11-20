@@ -3,6 +3,8 @@
 
 Resmi test kümesi ancak Ocak 2027'de yayımlanacağı için açık dev kümesini test kümesi olarak kullanıyor ve model seçiminde hiç kullanmıyoruz. Bunun yerine \emph{eğitim} kaynak çiftlerinin \%10'unu doğrulama dilimi olarak ayırıyoruz (her track'te aynı çiftler; böylece diller arası sızıntı olmaz). Bu dilimde öğrenme oranını $\{2,5\}\cdot10^{-5}$ arasından (EN üzerinde) ve en iyi epoch'u (tek dilli eğitimde 10, karma eğitimde 4 epoch içinden) seçiyoruz. Seçim her zaman ayrı çözümlemeyle yapılır, dolayısıyla çözümleyiciden bağımsızdır. AdamW, 32'lik yığın ve \%10 ısınma kullanıyor, dizüstü bilgisayarın 18\,GB belleğine sığmak için kelime gömmelerini donduruyoruz (Ek~\ref{app:hparams}). Her yapılandırma üç tohumla çalıştırılır (Apple M3 Pro'da tek dilli koşu başına 3.5--6 dakika). Tüm skorlar resmi puanlayıcıdan alınmıştır.
 
+\paragraph{Kaynaklar.} Yalnızca açık kodlayıcı ağırlıklarını ve resmi eğitim verisini kullanıyoruz.\footnote{\url{https://inigolopezgazpio.net/SemEval-2027-Task-2-DiCo-NLI/}} Tek harici veri, mDeBERTa-NLI'ın eğitildiği NLI derlemleridir (XNLI, çevrilmiş İngilizce NLI). PhrasIS kullanılmamıştır.
+
 \section{Sonuçlar}
 \label{sec:results}
 
@@ -18,35 +20,34 @@ Resmi test kümesi ancak Ocak 2027'de yayımlanacağı için açık dev kümesin
 
 \input{tables_tr/errors}
 
-\paragraph{Hatalar nereden geliyor?} Tablo~\ref{tab:errors}, her altın tersinir çiftin sonucunu ayrıştırır. mDeBERTa'da çiftlerin yalnızca \%2.5'i yön açısından tutarsızdır; baskın hata, tersinir bir çift için \NO tahmin etmektir (\%13.2). \NO sınıfı yalnızca 54 F1'e ulaşır. Ortak çözümleme tüm tutarsızlıkları giderir ve bazı hatalı \NO tahminlerini de düzeltir (\%13.2$\rightarrow$\%11.3), çünkü emin olan bir yön diğerini geçersiz kılar. Önceden tutarsız olan çiftlerin küçük bir kısmı tutarlı ama yanlış hâle gelir (\%7.1$\rightarrow$\%8.5). Tablo~\ref{tab:main}'deki tanı amaçlı \emph{struct} satırı, \NO kararının ne kadar önemli olduğunu ölçer: \NO'yu model yerine çift yapısıyla (O2) belirlemek ortalama F1'i 76.7'den 89.5'e çıkarır. Dolayısıyla açık veride görevin en zor kısmı, ilişkinin \emph{hangi yönde} geçerli olduğu değil, \emph{tersinir olup olmadığına} karar vermektir. Test verisi bu yapıyı gizlemedikçe, bu kısım aynı zamanda en kolay kestirme yoldur.
+\paragraph{Hatalar nereden geliyor?} Tablo~\ref{tab:errors}, her altın tersinir çiftin sonucunu ayrıştırır. mDeBERTa'da çiftlerin yalnızca \%2.5'i yön açısından tutarsızdır; baskın hata, tersinir bir çift için \NO tahmin etmektir (\%13.2). \NO sınıfı yalnızca 54 F1'e ulaşır. Ortak çözümleme tüm tutarsızlıkları giderir ve bazı hatalı \NO tahminlerini de düzeltir (\%13.2$\rightarrow$\%11.3), çünkü emin olan bir yön diğerini geçersiz kılar. Tablo~\ref{tab:main}'deki tanı amaçlı \emph{struct} satırı, \NO kararının ne kadar önemli olduğunu ölçer: \NO'yu model yerine çift yapısıyla (O2) belirlemek ortalama F1'i 76.7'den 89.5'e çıkarır. Dolayısıyla açık veride görevin en zor kısmı, ilişkinin \emph{hangi yönde} geçerli olduğu değil, \emph{tersinir olup olmadığına} karar vermektir. Test verisi bu yapıyı gizlemedikçe, bu kısım aynı zamanda en kolay kestirme yoldur.
 
 \input{tables_tr/transfer}
 
-\paragraph{Diller arası aktarım.} Yalnızca İngilizceyle eğitilen bir model İspanyolcaya neredeyse kayıpsız aktarılır: kendi verisiyle eğitimin 81.1 HardCons'una karşı 80.7 (Tablo~\ref{tab:transfer}). Baskçada 10, karma track'te ise 22 puan kaybeder; yani diller arası çiftler diller arası denetim gerektirir. Dört eğitim kümesini birleştirmek en iyi tek model ayarıdır (kendi verisiyle 80.2'ye karşı ortalama 81.9 HardCons); en büyük kazançlar Baskça ($+2.7$) ve İspanyolcadadır ($+2.5$). Ortak çözümleme en çok sıfır-örnek ayarında işe yarar ($+4.0$ HardCons).
+\paragraph{Diller arası aktarım.} Yalnızca İngilizceyle eğitilen bir model İspanyolcada HardCons'unu korur (kendi verisiyle 81.1'e karşı 80.7; Tablo~\ref{tab:transfer}), ancak 3.5 F1 puanı kaybeder. \NO'yu daha seyrek tahmin eder (duyarlılık \%59 yerine \%43); bu, \NO örneklerinde F1'e mal olur ama tersinir çiftleri korur. Baskçada 10, karma track'te 22 HardCons puanı kaybeder; yani diller arası çiftler diller arası denetim gerektirir. Dört eğitim kümesini birleştirmek en iyi tek model ayarıdır (kendi verisiyle 80.2'ye karşı ortalama 81.9 HardCons); en büyük kazanç Baskça ($+2.7$) ve İspanyolcada ($+2.5$).
 
 \section{Çalışma Planı ve Görev Dağılımı}
 \label{sec:plan}
 
-Bölüm~\ref{sec:method}'teki tüm bileşenler değerlendirildi. Final raporuna (28 Aralık) kadar şunları planlıyoruz:
-(i) en iyi iki bileşeni, NLI ön eğitimini ve birleşik çok dilli eğitimi bir araya getirmek;
-(ii) asıl hata kaynağı olan \NO tespitini, \NO logitinin doğrulama diliminde kalibrasyonu ve daha büyük bir kodlayıcıyla (XLM-R\textsubscript{large}) iyileştirmek;
-(iii) ifade türüne ve çeviri kalitesine göre nitel bir hata analizi yapmak;
-(iv) isteğe bağlı olarak büyük dil modelleriyle sıfır/az örnekli bir karşılaştırma yapmak.
-Sorumluluklar Tablo~\ref{tab:plan}'te verilmiştir.
+Bölüm~\ref{sec:method}'teki tüm bileşenler uygulandı. Final raporu (28 Aralık) için planımız:
+(i) NLI ön eğitimi ile birleşik eğitimi 3 tohumlu toplulukta birleştirmek ve \emph{her} örneğin yer değiştirmiş girdisini modelin kendisiyle puanlamak (ters yön dosyada olmasa da);
+(ii) \NO logitini doğrulama diliminde kalibre etmek ve ters çevrilmiş \NO eğitim örneklerini (bunlar da \NO'dur) 0.5 kayıp ağırlığıyla eklemek;
+(iii) $\lambda\in\{0.1, 0.3, 1\}$ ayarı;
+(iv) nitel hata analizi; isteğe bağlı olarak küçük, açık bir LLM ile sıfır-örnek deney (ayrı ve ortak çözümleme).
 
 \begin{table}[h]
 \centering\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}ll@{}}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lp{0.74\columnwidth}@{}}
 \toprule
-Sorumluluk & Üye \\
+Üye & Kod / analiz; plan maddesi; yazdığı bölümler \\
 \midrule
-Liderlik, deneyler, yazım & Ertuğrul Şahin \\
-Değerlendirme, hakemlik & Metin Ertekin Küçük \\
-Modelleme, tutarlılık & Bekir Okudurlar \\
-Veri, diller arası analiz & Mungunsarnai Tumurkhuu \\
+Küçük & Puanlayıcı entegrasyonu, temel sistemler, hata analizi (Tablo~\ref{tab:errors}); (iv); \S1, \S6 \\
+Şahin & Eğitim altyapısı, ortak çözümleme, deneyler; (i); \S4, 5, 7, 8 \\
+Okudurlar & Kodlayıcılar, NLI aktarımı, tutarlılık kaybı; (iii); \S3, \S6 \\
+Tumurkhuu & Veri artefaktları (O1/O2), diller arası aktarım (Tablo~\ref{tab:transfer}); (ii); \S2, \S6 \\
 \bottomrule
 \end{tabular}
-\caption{Sorumluluklar. Modelleme: kodlayıcılar, NLI aktarımı, ortak çözümleme, tutarlılık kaybı. Veri: artefaktlar, temel sistemler, aktarım, \NO analizi. Takvim: hakemlik 30 Kasım; ek çalışmalar 1--14 Aralık; final 28 Aralık.}
+\caption{Görev dağılımı (taslağı herkes okur).}
 \label{tab:plan}
 \end{table}
