@@ -1,7 +1,7 @@
 \section{Per-seed Variability}
 \label{app:std}
 
-Table~\ref{tab:std} reports mean $\pm$ standard deviation over the three seeds for every learned system of Table~\ref{tab:main}. For the mDeBERTa variants the standard deviation is at most 2.3 points (median about 1), below the average HardCons gain of joint decoding ($+3.0$). XLM-R is far less stable (up to 16 points), mainly because of the collapsed Spanish seed.
+Table~\ref{tab:std} reports mean $\pm$ sample standard deviation over the three seeds for every learned system of Table~\ref{tab:main}. For the mDeBERTa variants the standard deviation is at most 2.9 points (median about 1.2), below the average HardCons gain of joint decoding ($+3.0$). XLM-R is far less stable (up to 20 points), mainly because of the collapsed Spanish seed.
 
 \input{tables/std}
 
@@ -21,6 +21,6 @@ Table~\ref{tab:transfer_full} extends Table~\ref{tab:transfer} with SoftCons, in
 \item Epochs: up to 10 (monolingual, EN-only) or 4 (mixed, pooled); best epoch by validation weighted F1 with independent decoding.
 \item Optimisation: AdamW, batch size 32 (both directions of a pair always in the same batch), 10\% linear warm-up then linear decay, weight decay 0.01, gradient clipping 1.0, maximum length 64 tokens. Word embeddings are frozen (250k-token vocabularies).
 \item Consistency loss weight $\lambda=1$ (not tuned).
-\item Seeds 1, 2, 3; seed ensembles average the predicted probabilities.
+\item Seeds 1, 2, 3; seed ensembles average the predicted probabilities. Runtime on an Apple M3 Pro: 3.5--6 minutes per monolingual run.
 \item Validation slice: Source pairs whose MD5 hash of \texttt{pair\_id} falls in the lowest 10\% (175 of 1{,}760 training source pairs).
 \end{itemize}

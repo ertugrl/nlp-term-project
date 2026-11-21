@@ -6,7 +6,7 @@ cd "${0:A:h}/.."
 export PYTORCH_ENABLE_MPS_FALLBACK=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src
 typeset -A MODELS LRS
 MODELS=(xlmr FacebookAI/xlm-roberta-base  mdeberta microsoft/mdeberta-v3-base  mdeberta-xnli MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7)
-LRS=(xlmr ${XLMR_LR:-2e-5}  mdeberta ${MDEB_LR:-5e-5}  mdeberta-xnli ${XNLI_LR:-2e-5})
+LRS=(xlmr ${XLMR_LR:-2e-5}  mdeberta ${MDEB_LR:-5e-5}  mdeberta-xnli ${XNLI_LR:-5e-5})
 keys=(${@:-xlmr mdeberta mdeberta-xnli})
 for key in $keys; do
   for seed in 1 2 3; do

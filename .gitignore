@@ -12,3 +12,4 @@ report/*.out
 report/build/*
 !report/build/main.pdf
 !report/build/main_tr.pdf
+revize.md

@@ -41,15 +41,15 @@ STRINGS = {
         "pooled": "Pooled",
         "cap_main": "Dev results (\\%). Learned systems: mean over 3 seeds (std.\\ in Appendix~\\ref{app:std}); "
         "the \\emph{3-seed ens.} rows are a single ensemble (averaged probabilities), not a mean. "
-        "\\emph{joint}: joint bidirectional decoding (Eq.~\\ref{eq:joint}). Bold: best learned (non-diagnostic) value. "
-        "The last row exploits observation O2 and is shown as a diagnostic only.",
+        "\\emph{joint}: joint decoding (Eq.~\\ref{eq:joint}). Bold: best learned in-track value (pooled: Table~\\ref{tab:transfer}). "
+        "Last row: diagnostic exploiting O2.",
         "cap_err": "Gold reversible pairs (\\%, dev, mean over tracks and seeds): both correct (OK), a direction predicted \\NO, "
         "inconsistent (Inc.), consistent but wrong. F1\\textsubscript{\\NO}: instance-level F1.",
         "cap_transfer": "Dev F1\\,/\\,HardCons (\\%) of mDeBERTa, joint decoding, 3 seeds. EN only is zero-shot on ES, EU, Mixed; "
         "on EN it reruns the in-track configuration (gap: GPU non-determinism). Full: Table~\\ref{tab:transfer_full}.",
         "cap_transfer_full": "Cross-lingual transfer of mDeBERTa on dev (\\%), mean $\\pm$ std.\\ over three seeds, "
         "with independent and joint decoding. Training data as in Table~\\ref{tab:transfer}.",
-        "cap_std": "Dev results (\\%), mean $\\pm$ standard deviation over three seeds.",
+        "cap_std": "Dev results (\\%), mean $\\pm$ sample standard deviation over three seeds.",
     },
     "tr": {
         "random": "Rastgele",
@@ -71,15 +71,15 @@ STRINGS = {
         "pooled": "Birleşik",
         "cap_main": "Dev sonuçları (\\%). Öğrenen sistemler: 3 tohumun ortalaması (standart sapmalar Ek~\\ref{app:std}'de); "
         "\\emph{3 tohum topluluğu} satırları ortalama değil, tek bir topluluğun (olasılık ortalaması) sonucudur. "
-        "\\emph{ortak}: ortak çift yönlü çözümleme (Denk.~\\ref{eq:joint}). Kalın: en iyi öğrenen (tanı dışı) değer. "
-        "Son satır O2'yi kullanır; yalnızca tanı amaçlıdır.",
+        "\\emph{ortak}: ortak çözümleme (Denk.~\\ref{eq:joint}). Kalın: kendi verisiyle eğitilenler içinde en iyi (birleşik: Tablo~\\ref{tab:transfer}). "
+        "Son satır: O2'yi kullanan tanı satırı.",
         "cap_err": "Altın tersinir çiftler (\\%; dev, track ve tohum ortalaması): iki yön de doğru (Doğru), bir yöne \\NO, "
         "tutarsız (Tuts.), tutarlı ama yanlış. F1\\textsubscript{\\NO}: örnek düzeyinde F1.",
         "cap_transfer": "mDeBERTa, ortak çözümleme, 3 tohum: dev F1\\,/\\,HardCons (\\%). Yalnız EN, ES, EU ve Karma'da sıfır-örnektir; "
-        "EN'de kendi verisi yapılandırmasının tekrar koşusudur (fark: GPU deterministik değil). Tümü: Tablo~\\ref{tab:transfer_full}.",
+        "EN'de kendi verisi ayarının tekrarıdır (fark: GPU belirlenimsizliği). Tümü: Tablo~\\ref{tab:transfer_full}.",
         "cap_transfer_full": "mDeBERTa'nın diller arası aktarımı (dev, \\%), üç tohum üzerinden ortalama $\\pm$ std., "
         "ayrı ve ortak çözümlemeyle. Eğitim verileri Tablo~\\ref{tab:transfer}'teki gibidir.",
-        "cap_std": "Dev sonuçları (\\%), üç tohum üzerinden ortalama $\\pm$ standart sapma.",
+        "cap_std": "Dev sonuçları (\\%), üç tohum üzerinden ortalama $\\pm$ örneklem standart sapması.",
     },
 }
 S = STRINGS["en"]

@@ -33,7 +33,7 @@ def collect(split: str = "dev") -> dict:
 def fmt(vals: list[float]) -> str:
     if len(vals) == 1:
         return f"{100 * vals[0]:.1f}"
-    return f"{100 * np.mean(vals):.1f}±{100 * np.std(vals):.1f}"
+    return f"{100 * np.mean(vals):.1f}±{100 * np.std(vals, ddof=1):.1f}"
 
 
 def table(split: str) -> tuple[list[str], dict]:
@@ -59,7 +59,7 @@ def table(split: str) -> tuple[list[str], dict]:
             avg_cells = [f"{100 * np.mean(avg[k]):.1f}" if avg[k] else "–" for k in METRICS]
             lines.append(f"| {config} | {mode} | {n} | " + " | ".join(cells + avg_cells) + " |")
             summary.setdefault(config, {})[mode] = {
-                t: {k: [float(np.mean(per[t][k])), float(np.std(per[t][k]))] for k in METRICS}
+                t: {k: [float(np.mean(per[t][k])), float(np.std(per[t][k], ddof=1))] for k in METRICS}
                 for t in per
             }
     return lines, summary

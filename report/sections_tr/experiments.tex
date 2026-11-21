@@ -1,7 +1,7 @@
 \section{Deney Düzeni}
 \label{sec:setup}
 
-Resmi test kümesi ancak Ocak 2027'de yayımlanacağı için açık dev kümesini test kümesi olarak kullanıyor ve model seçiminde hiç kullanmıyoruz. Bunun yerine \emph{eğitim} kaynak çiftlerinin \%10'unu doğrulama dilimi olarak ayırıyoruz (her track'te aynı çiftler; böylece diller arası sızıntı olmaz). Bu dilimde öğrenme oranını $\{2,5\}\cdot10^{-5}$ arasından (EN üzerinde) ve en iyi epoch'u (tek dilli eğitimde 10, karma eğitimde 4 epoch içinden) seçiyoruz. Seçim her zaman ayrı çözümlemeyle yapılır, dolayısıyla çözümleyiciden bağımsızdır. AdamW, 32'lik yığın ve \%10 ısınma kullanıyor, dizüstü bilgisayarın 18\,GB belleğine sığmak için kelime gömmelerini donduruyoruz (Ek~\ref{app:hparams}). Her yapılandırma üç tohumla çalıştırılır (Apple M3 Pro'da tek dilli koşu başına 3.5--6 dakika). Tüm skorlar resmi puanlayıcıdan alınmıştır.
+Resmi test kümesi ancak Ocak 2027'de yayımlanacağı için açık dev kümesini test kümesi olarak kullanıyor ve model seçiminde hiç kullanmıyoruz. Bunun yerine \emph{eğitim} kaynak çiftlerinin \%10'unu doğrulama dilimi olarak ayırıyoruz (her track'te aynı çiftler; böylece diller arası sızıntı olmaz). Bu dilimde öğrenme oranını $\{2,5\}\cdot10^{-5}$ arasından (EN üzerinde) ve en iyi epoch'u (tek dilli eğitimde 10, karma eğitimde 4 epoch içinden) seçiyoruz. Seçim her zaman ayrı çözümlemeyle yapılır, dolayısıyla çözümleyiciden bağımsızdır. AdamW, 32'lik yığın ve \%10 ısınma kullanıyor, dizüstü bilgisayarın 18\,GB belleğine sığmak için kelime gömmelerini donduruyoruz (Ek~\ref{app:hparams}). Her yapılandırma üç tohumla çalıştırılır. Tüm skorlar resmi puanlayıcıdan alınmıştır.
 
 \paragraph{Kaynaklar.} Yalnızca açık kodlayıcı ağırlıklarını ve resmi eğitim verisini kullanıyoruz.\footnote{\url{https://inigolopezgazpio.net/SemEval-2027-Task-2-DiCo-NLI/}} Tek harici veri, mDeBERTa-NLI'ın eğitildiği NLI derlemleridir (XNLI, çevrilmiş İngilizce NLI). PhrasIS kullanılmamıştır.
 
@@ -10,30 +10,30 @@ Resmi test kümesi ancak Ocak 2027'de yayımlanacağı için açık dev kümesin
 
 \input{tables_tr/main}
 
-\paragraph{Kodlayıcılar.} mDeBERTa, XLM-R'ı ortalamada 14.7 F1 puanı geride bırakır (Tablo~\ref{tab:main}). XLM-R bu küçük kümelerde kararsızdır da: bir İspanyolca tohumu 0.41 doğrulama F1'ine çöktü. İngilizcede mDeBERTa (79.6 F1 / 81.0 HardCons), iki düzen birebir aynı olmasa da DeBERTa-v3 pilot temel sisteminin \citep[75 / 79;][]{apaolaza2026assessing} üzerindedir. Skorlar EN'den ES'e, EU'ya ve Karma'ya doğru düşer. Karma track'te en zor kombinasyon İspanyolca--Baskça'dır (en-es için 75.1'e karşı 71.6 F1).
+\paragraph{Kodlayıcılar.} Ayrı çözümlemede mDeBERTa, XLM-R'ı ortalamada 14.7 F1 puanı geride bırakır (Tablo~\ref{tab:main}). XLM-R bu küçük kümelerde kararsızdır da: bir İspanyolca tohumu 41.3 doğrulama F1'ine çöktü. İngilizcede mDeBERTa (79.6 F1 / 81.0 HardCons), iki düzen birebir aynı olmasa da DeBERTa-v3 pilot temel sisteminin \citep[75 / 79;][]{apaolaza2026assessing} üzerindedir. Skorlar EN'den ES'e, EU'ya ve Karma'ya doğru düşer. Karma track'te en zor kombinasyon İspanyolca--Baskça'dır (mDeBERTa: en-es için 75.1'e karşı 71.6 F1).
 
-\paragraph{Ortak çözümleme.} 72 değerlendirmenin tamamında (6 sistem $\times$ 3 tohum $\times$ 4 track) ortak çözümleme HardCons'u \emph{her seferinde} artırdı; ortalama artış $+3.9$ puandır. Kazanç mDeBERTa'da $+3.0$, XLM-R'da $+8.2$'dir: model ne kadar zayıf ve kararsızsa kazanç o kadar büyüktür. Ortak çözümleme SoftCons'u da her değerlendirmede ($+6.5$), F1'i ise hafifçe artırdı ($+0.5$; 72 değerlendirmenin 51'inde pozitif). Ortak çözümleme tohum topluluğuyla birbirini tamamlar. En iyi sistemimiz, NLI ön eğitimli mDeBERTa'nın ortak çözümlemeli 3 tohumlu topluluğudur ve ortalama 78.9 F1 ile 82.8 HardCons'a ulaşır. $y^\star=\NO$ olan çiftler tutarsız sayıldığı için SoftCons \%100'ün altında kalır.
+\paragraph{Ortak çözümleme.} 72 değerlendirmenin tamamında (Tablo~\ref{tab:main}'deki dört sistem ve Tablo~\ref{tab:transfer}'teki iki aktarım ayarı, $\times$ 3 tohum $\times$ 4 track) ortak çözümleme HardCons'u \emph{her seferinde} artırdı; ortalama artış $+3.9$ puandır. Kazanç mDeBERTa'da $+3.0$, XLM-R'da $+8.2$'dir: model ne kadar zayıfsa kazanç o kadar büyüktür. Ortak çözümleme SoftCons'u da her değerlendirmede ($+6.5$), F1'i ise hafifçe artırdı ($+0.5$; 72 değerlendirmenin 51'inde pozitif). Ortak çözümleme tohum topluluğuyla birbirini tamamlar. Kendi verisiyle eğitilen en iyi sistemimiz, NLI ön eğitimli mDeBERTa'nın ortak çözümlemeli 3 tohumlu topluluğudur ve ortalama 78.9 F1 ile 82.8 HardCons'a ulaşır. XLM-R'ın yüksek SoftCons'u seyrek \NO tahmininden gelir (\%29 duyarlılık; O1).
 
-\paragraph{NLI ön eğitimi.} NLI ile ince ayar yapılmış modelden başlamak İngilizcede ($+3.2$ F1) ve İspanyolcada ($+1.7$), Karma'da ise hafifçe ($+1.3$) fayda sağlar. XNLI'da bulunmayan bir dil olan Baskçada fayda sağlamaz ($-1.4$). Ortak çözümleme altında ortalama $+1.4$ HardCons ekler.
+\paragraph{NLI ön eğitimi.} Ayrı çözümlemede, NLI ile ince ayarlı modelden başlamak İngilizcede ($+3.2$ F1), İspanyolcada ($+1.7$) ve hafifçe Karma'da ($+1.3$) fayda sağlar; NLI eğitim verisinde olmayan Baskçada sağlamaz ($-1.4$). Ortak çözümleme altında ortalama $+1.4$ HardCons ekler.
 
-\paragraph{Eğitimde mi, çözümlemede mi tutarlılık?} Tutarlılık kaybı amaçlandığı gibi çalışır. Tutarsız çiftlerin payını düşürür (\%2.5$\rightarrow$\%1.7) ve ayrı çözümlemede HardCons'u $+1.6$, SoftCons'u $+2.7$ artırır; bedeli $-0.5$ F1'dir. Ancak ortak çözümleme tek başına bu HardCons kazancının yaklaşık iki katını verir ($+3.0$), ortak çözümlemenin altına kaybı eklemek ise yalnızca $+0.6$ getirir (80.2$\rightarrow$80.8). Dolayısıyla tutarlılığı çözümleme anında zorlamak, onu öğretmekten hem daha ucuz hem daha etkilidir.
+\paragraph{Eğitimde mi, çözümlemede mi tutarlılık?} Tutarlılık kaybı tutarsız çiftlerin payını düşürür (\%2.5$\rightarrow$\%1.7) ve ayrı çözümlemede HardCons'u $+1.6$, SoftCons'u $+2.7$ artırır; bedeli $-0.5$ F1'dir. Ancak ortak çözümleme tek başına bu HardCons kazancının yaklaşık iki katını verir ($+3.0$), ortak çözümlemenin altına kaybı eklemek ise yalnızca $+0.6$ HardCons getirir (80.2$\rightarrow$80.8) ve yine 0.8 F1'e mal olur. Yani tutarlılığı çözümlemede zorlamak, onu öğretmekten hem ucuz hem etkilidir.
 
 \input{tables_tr/errors}
 
-\paragraph{Hatalar nereden geliyor?} Tablo~\ref{tab:errors}, her altın tersinir çiftin sonucunu ayrıştırır. mDeBERTa'da çiftlerin yalnızca \%2.5'i yön açısından tutarsızdır; baskın hata, tersinir bir çift için \NO tahmin etmektir (\%13.2). \NO sınıfı yalnızca 54 F1'e ulaşır. Ortak çözümleme tüm tutarsızlıkları giderir ve bazı hatalı \NO tahminlerini de düzeltir (\%13.2$\rightarrow$\%11.3), çünkü emin olan bir yön diğerini geçersiz kılar. Tablo~\ref{tab:main}'deki tanı amaçlı \emph{struct} satırı, \NO kararının ne kadar önemli olduğunu ölçer: \NO'yu model yerine çift yapısıyla (O2) belirlemek ortalama F1'i 76.7'den 89.5'e çıkarır. Dolayısıyla açık veride görevin en zor kısmı, ilişkinin \emph{hangi yönde} geçerli olduğu değil, \emph{tersinir olup olmadığına} karar vermektir. Test verisi bu yapıyı gizlemedikçe, bu kısım aynı zamanda en kolay kestirme yoldur.
+\paragraph{Hatalar nereden geliyor?} Tablo~\ref{tab:errors}, her altın tersinir çiftin sonucunu ayrıştırır. mDeBERTa'da SoftCons çiftlerin \%15.7'sinde sağlanmaz (pilot çalışmadaki \%16'ya yakın), ancak çiftlerin yalnızca \%2.5'i yön açısından tutarsızdır: baskın hata, tersinir bir çift için \NO tahmin etmektir (\%13.2). \NO sınıfı yalnızca 54 F1'e ulaşır. Ortak çözümleme tüm tutarsızlıkları giderir ve bazı hatalı \NO tahminlerini de düzeltir (\%13.2$\rightarrow$\%11.3), çünkü emin olan bir yön diğerini geçersiz kılar. Tanı amaçlı \emph{struct} satırı (Tablo~\ref{tab:main}) \NO kararının önemini ölçer: \NO'yu model yerine çift yapısıyla (O2) belirlemek, ortak çözümlemeye göre ortalama F1'i 77.1'den 89.5'e, HardCons'u 80.2'den 87.5'e çıkarır. Yani açık veride asıl zorluk, ilişkinin \emph{hangi yönde} değil, \emph{tersinir olup olmadığına} karar vermektir; yapı gizlenmedikçe en kolay kestirme de budur.
 
 \input{tables_tr/transfer}
 
-\paragraph{Diller arası aktarım.} Yalnızca İngilizceyle eğitilen bir model İspanyolcada HardCons'unu korur (kendi verisiyle 81.1'e karşı 80.7; Tablo~\ref{tab:transfer}), ancak 3.5 F1 puanı kaybeder. \NO'yu daha seyrek tahmin eder (duyarlılık \%59 yerine \%43); bu, \NO örneklerinde F1'e mal olur ama tersinir çiftleri korur. Baskçada 10, karma track'te 22 HardCons puanı kaybeder; yani diller arası çiftler diller arası denetim gerektirir. Dört eğitim kümesini birleştirmek en iyi tek model ayarıdır (kendi verisiyle 80.2'ye karşı ortalama 81.9 HardCons); en büyük kazanç Baskça ($+2.7$) ve İspanyolcada ($+2.5$).
+\paragraph{Diller arası aktarım.} Yalnızca İngilizceyle eğitilen bir model İspanyolcada HardCons'unu korur (kendi verisiyle 81.1'e karşı 80.7; Tablo~\ref{tab:transfer}), ancak 3.5 F1 puanı kaybeder. \NO'yu daha seyrek tahmin eder (duyarlılık \%59 yerine \%42); bu, \NO örneklerinde F1'e mal olur ama tersinir çiftleri korur. Baskçada 10, karma track'te 22 HardCons puanı kaybeder; yani diller arası çiftler diller arası denetim gerektirir. Dört eğitim kümesini birleştirmek tek model olarak en iyi HardCons'u verir (kendi verisiyle 80.2'ye ve mDeBERTa-NLI'ın 81.6'sına karşı 81.9); en büyük kazanç Baskça ($+2.7$) ve İspanyolcada ($+2.5$). 3 tohumlu topluluğu (78.7 F1 / 82.9 HardCons) harici NLI verisi olmadan en iyi sistemimize denktir.
 
 \section{Çalışma Planı ve Görev Dağılımı}
 \label{sec:plan}
 
 Bölüm~\ref{sec:method}'teki tüm bileşenler uygulandı. Final raporu (28 Aralık) için planımız:
-(i) NLI ön eğitimi ile birleşik eğitimi 3 tohumlu toplulukta birleştirmek ve \emph{her} örneğin yer değiştirmiş girdisini modelin kendisiyle puanlamak (ters yön dosyada olmasa da);
+(i) NLI ön eğitimi ile birleşik eğitimi 3 tohumlu toplulukta birleştirmek ve \emph{her} örneğin yer değiştirmiş girdisini modelin kendisiyle puanlamak;
 (ii) \NO logitini doğrulama diliminde kalibre etmek ve ters çevrilmiş \NO eğitim örneklerini (bunlar da \NO'dur) 0.5 kayıp ağırlığıyla eklemek;
 (iii) $\lambda\in\{0.1, 0.3, 1\}$ ayarı;
-(iv) nitel hata analizi; isteğe bağlı olarak küçük, açık bir LLM ile sıfır-örnek deney (ayrı ve ortak çözümleme).
+(iv) nitel hata analizi; isteğe bağlı küçük, açık bir LLM ile sıfır-örnek deney.
 
 \begin{table}[h]
 \centering\small
@@ -48,6 +48,6 @@ Okudurlar & Kodlayıcılar, NLI aktarımı, tutarlılık kaybı; (iii); \S3, \S6
 Tumurkhuu & Veri artefaktları (O1/O2), diller arası aktarım (Tablo~\ref{tab:transfer}); (ii); \S2, \S6 \\
 \bottomrule
 \end{tabular}
-\caption{Görev dağılımı (taslağı herkes okur).}
+\caption{Görev dağılımı.}
 \label{tab:plan}
 \end{table}

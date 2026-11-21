@@ -1,7 +1,7 @@
 \section{Tohumlar Arası Değişkenlik}
 \label{app:std}
 
-Tablo~\ref{tab:std}, Tablo~\ref{tab:main}'deki her öğrenen sistem için üç tohum üzerinden ortalama $\pm$ standart sapmayı verir. mDeBERTa varyantlarında standart sapma en fazla 2.3 puandır (medyan yaklaşık 1); bu, ortak çözümlemenin ortalama HardCons kazancının ($+3.0$) altındadır. XLM-R çok daha kararsızdır (16 puana kadar); bunun başlıca nedeni çöken İspanyolca tohumudur.
+Tablo~\ref{tab:std}, Tablo~\ref{tab:main}'deki her öğrenen sistem için üç tohum üzerinden ortalama $\pm$ örneklem standart sapmasını verir. mDeBERTa varyantlarında standart sapma en fazla 2.9 puandır (medyan yaklaşık 1.2); bu, ortak çözümlemenin ortalama HardCons kazancının ($+3.0$) altındadır. XLM-R çok daha kararsızdır (20 puana kadar); bunun başlıca nedeni çöken İspanyolca tohumudur.
 
 \input{tables_tr/std}
 
@@ -21,6 +21,6 @@ Tablo~\ref{tab:transfer_full}, Tablo~\ref{tab:transfer}'ü SoftCons, ayrı çöz
 \item Epoch: en fazla 10 (tek dilli, yalnız EN) ya da 4 (karma, birleşik); en iyi epoch, ayrı çözümlemeyle doğrulama ağırlıklı F1'ine göre seçilir.
 \item Optimizasyon: AdamW, 32'lik yığın (bir çiftin iki yönü her zaman aynı yığında), \%10 doğrusal ısınma ve ardından doğrusal azalma, 0.01 ağırlık azaltımı, 1.0 gradyan kırpma, en fazla 64 token. Kelime gömmeleri dondurulmuştur (250 bin tokenlik sözlükler).
 \item Tutarlılık kaybı ağırlığı $\lambda=1$ (ayarlanmadı).
-\item Tohumlar 1, 2, 3; tohum toplulukları tahmin edilen olasılıkların ortalamasını alır.
+\item Tohumlar 1, 2, 3; tohum toplulukları tahmin edilen olasılıkların ortalamasını alır. Apple M3 Pro'da tek dilli koşu başına 3.5--6 dakika.
 \item Doğrulama dilimi: \texttt{pair\_id}'nin MD5 özeti en düşük \%10'a düşen kaynak çiftler (1{,}760 eğitim kaynak çiftinden 175'i).
 \end{itemize}
